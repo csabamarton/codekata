@@ -6,9 +6,9 @@ import java.util.Set;
 public class EnumSetTest {
 	private enum Color {
 		RED(255, 0, 0), GREEN(0, 255, 0), BLUE(0, 0, 255);
-		private int r;
-		private int g;
-		private int b;
+		private final int r;
+		private final int g;
+		private final int b;
 
 		Color(int r, int g, int b)
 		{
@@ -48,8 +48,7 @@ public class EnumSetTest {
 	public static void drawLine(Set<Color> colors)
 	{
 		System.out.println("Requested Colors to draw lines : " + colors);
-		for (Color c : colors) {
-			System.out.println("drawing line in color : " + c);
-		}
+
+		colors.forEach(color -> System.out.println("drawing line in color : " + color));
 	}
 }
