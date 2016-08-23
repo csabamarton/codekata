@@ -16,6 +16,7 @@
         <module>time-conversion</module>
         <module>array-rotation</module>
         <module>algorithms</module>
+        <module>collections</module>
     </modules>
 
 
