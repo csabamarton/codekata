@@ -20,7 +20,7 @@ public class Gemstones {
 		Set<Character> previousStoneElements = null;
 
 		for(int i = 0; i < numOfStones; i++) {
-			elements = new HashSet<Character>();
+			elements = new HashSet<>();
 			String stone = in.next();
 
 			Set<Character> cleanStone = cleanDuplication(stone);
@@ -45,7 +45,7 @@ public class Gemstones {
 	}
 
 	private Set cleanDuplication(String stone){
-		Set<Character> elements = new HashSet<Character>();
+		Set<Character> elements = new HashSet<>();
 
 		for(char character : stone.toCharArray()) {
 			if(!elements.contains(character)){
