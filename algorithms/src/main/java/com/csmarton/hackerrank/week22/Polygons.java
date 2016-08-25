@@ -1,6 +1,9 @@
 package com.csmarton.hackerrank.week22;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 public class Polygons
 {
@@ -51,6 +54,7 @@ public class Polygons
 
 	private static float getSum(List<Float> list) {
 		float sum = 0;
+
 		for(int i=0; i < list.size(); i++) {
 			sum = sum + list.get(i);
 		}
