@@ -17,6 +17,7 @@
         <module>array-rotation</module>
         <module>algorithms</module>
         <module>collections</module>
+        <module>java8</module>
     </modules>
 
 
