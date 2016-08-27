@@ -19,7 +19,7 @@ public class InsertionSort {
 
 		short v = array[lengthOfArray-1];
 
-		boolean isFirtPlaced = true;
+		boolean isFirstPlaced = true;
 
 		for(short i = (short)(lengthOfArray-2); i>=0; i--) {
 			if(array[i] > v){
@@ -28,7 +28,7 @@ public class InsertionSort {
 				array[i+1] = v;
 				printArray(array);
 
-				isFirtPlaced = false;
+				isFirstPlaced = false;
 
 				break;
 			}
@@ -36,7 +36,7 @@ public class InsertionSort {
 			printArray(array);
 		}
 
-		if(isFirtPlaced){
+		if(isFirstPlaced){
 			array[0] = v;
 			printArray(array);
 		}

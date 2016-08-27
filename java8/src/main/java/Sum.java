@@ -2,6 +2,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Sum {
 	public static void main(String[] args)
@@ -12,10 +13,22 @@ public class Sum {
 			numbers.add(i);
 		}
 
-		loopWithStream(numbers);
+		//loopWithStream(numbers);
 
 		Sum sum = new Sum();
-		sum.testClassLoop();
+		//sum.testClassLoop();
+
+		sum.cutTheList(numbers);
+	}
+
+	private void cutTheList(List numbers){
+		List reducedList = IntStream.range(3,numbers.size())
+				.mapToObj(n -> n)
+				.collect(Collectors.toList());
+
+		String result = (String)reducedList.stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+
+		System.out.println(result);
 	}
 
 	private void testClassLoop()
