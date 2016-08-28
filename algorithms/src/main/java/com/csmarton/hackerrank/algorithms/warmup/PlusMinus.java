@@ -1,11 +1,11 @@
-package com.csmarton.hackerrank.plusminus;
+package com.csmarton.hackerrank.algorithms.warmup;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-public class Main {
+public class PlusMinus {
 
 	public static void main(String[] args)
 	{

@@ -1,4 +1,4 @@
-package com.csmarton.hackerrank.timeconversion;
+package com.csmarton.hackerrank.algorithms.warmup;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Main {
+public class TimeConversion {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ssaa");
 	private static SimpleDateFormat dateFormatMilitary = new SimpleDateFormat("HH:mm:ss");
 

@@ -1,4 +1,4 @@
-package com.csmarton.hackerrank.arrayrotaion;
+package com.csmarton.hackerrank.datastructures.array;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Main {
+public class ArrayRotation {
 
 	public static void main(String[] args)
 	{

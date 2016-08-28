@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CollectionsTest {
@@ -33,8 +34,6 @@ public class CollectionsTest {
 				.mapToObj(i -> contestents.get(i))
 				.collect(Collectors.toList());
 
-		System.out.print(subList);
-
 		assertTrue("Must be equals", contestents.subList(3, contestents.size()).equals(subList));
 	}
 
@@ -45,7 +44,7 @@ public class CollectionsTest {
 				.map(Object::toString)
 				.collect(Collectors.joining(" "));
 
-		assertTrue(result.equals("-4 -5 -6 -7 -8 -9"));
+		assertEquals(result, "-4 -5 -6 -7 -8 -9");
 	}
 
 }
