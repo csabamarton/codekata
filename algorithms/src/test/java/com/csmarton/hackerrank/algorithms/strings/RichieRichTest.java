@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class RichieRichTest {
 	private static final String TEST_RESOURCE_FOLDER = "src/test/resources/";
 	private static final String RICHIE_RICH_RESOURCE_FOLDER = "richierich/";
@@ -34,8 +36,8 @@ public class RichieRichTest {
 	{
 		loadInputs();
 
-		Assert.assertEquals("Change limit has been loaded wrongly", 1, richieRich.getChangeLimit());
-		Assert.assertEquals("Input string has been loaded wrongly", "3943", richieRich.getInputNumber());
+		assertEquals("Change limit has been loaded wrongly", 1, richieRich.getChangeLimit());
+		assertEquals("Input string has been loaded wrongly", "3943", richieRich.getInputNumber());
 	}
 
 	private void loadInputs() throws FileNotFoundException
@@ -53,6 +55,6 @@ public class RichieRichTest {
 
 		List<Integer> expectedIndexes = new ArrayList<>();
 		expectedIndexes.add(1);
-		Assert.assertEquals("Indexes of Wrong Numbers are wrong", expectedIndexes, positionsOfNeedToChange);
+		assertEquals("Indexes of Wrong Numbers are wrong", expectedIndexes, positionsOfNeedToChange);
 	}
 }
