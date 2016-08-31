@@ -15,86 +15,6 @@ public class FolderAccess {
 
 	private List<TreeItem> allItems;
 
-	public static class TreeItem {
-		private String name;
-		private List<TreeItem> children;
-
-		public TreeItem(String name)
-		{
-			this.name = name;
-		}
-
-		public String getName()
-		{
-			return name;
-		}
-
-		public void addChild(String name)
-		{
-			if (getChildren() == null) {
-				setChildren(Lists.newArrayList());
-			}
-
-			boolean alreadyHasNodeWithThisName = false;
-			for (TreeItem item : getChildren()) {
-				if (item.getName().equals(name)) {
-					alreadyHasNodeWithThisName = true;
-
-					break;
-				}
-			}
-
-			assertTrue(!alreadyHasNodeWithThisName);
-
-			getChildren().add(new TreeItem(name));
-		}
-
-		public TreeItem getNodeByName(String name)
-		{
-			if (getChildren() == null) {
-				return null;
-			}
-
-			for (TreeItem item : getChildren()) {
-				if (item.getName().equals(name)) {
-
-					return item;
-				}
-			}
-			return null;
-		}
-
-		public void addChild(TreeItem child)
-		{
-			if (getChildren() == null) {
-				setChildren(Lists.newArrayList());
-			}
-
-			getChildren().add(child);
-		}
-
-		public List<TreeItem> getChildren()
-		{
-			return children;
-		}
-
-		public void setChildren(List<TreeItem> children)
-		{
-			this.children = children;
-		}
-
-		@Override
-		public int hashCode()
-		{
-			int result = 0;
-			if (children != null && children.size()>0) {
-				result += children.hashCode();
-			}
-
-			return 39 * result + name.hashCode();
-		}
-	}
-
 	public List<String> readables;
 	public List<String> writables;
 
@@ -206,5 +126,85 @@ public class FolderAccess {
 		}
 
 		return null;
+	}
+
+	public static class TreeItem {
+		private String name;
+		private List<TreeItem> children;
+
+		public TreeItem(String name)
+		{
+			this.name = name;
+		}
+
+		public String getName()
+		{
+			return name;
+		}
+
+		public void addChild(String name)
+		{
+			if (getChildren() == null) {
+				setChildren(Lists.newArrayList());
+			}
+
+			boolean alreadyHasNodeWithThisName = false;
+			for (TreeItem item : getChildren()) {
+				if (item.getName().equals(name)) {
+					alreadyHasNodeWithThisName = true;
+
+					break;
+				}
+			}
+
+			assertTrue(!alreadyHasNodeWithThisName);
+
+			getChildren().add(new TreeItem(name));
+		}
+
+		public TreeItem getNodeByName(String name)
+		{
+			if (getChildren() == null) {
+				return null;
+			}
+
+			for (TreeItem item : getChildren()) {
+				if (item.getName().equals(name)) {
+
+					return item;
+				}
+			}
+			return null;
+		}
+
+		public void addChild(TreeItem child)
+		{
+			if (getChildren() == null) {
+				setChildren(Lists.newArrayList());
+			}
+
+			getChildren().add(child);
+		}
+
+		public List<TreeItem> getChildren()
+		{
+			return children;
+		}
+
+		public void setChildren(List<TreeItem> children)
+		{
+			this.children = children;
+		}
+
+		@Override
+		public int hashCode()
+		{
+			int result = 0;
+			if (children != null && children.size()>0) {
+				result += children.hashCode();
+			}
+
+			return 39 * result + name.hashCode();
+		}
 	}
 }

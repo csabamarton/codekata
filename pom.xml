@@ -11,9 +11,6 @@
     <modules>
         <module>io-stream</module>
         <module>triplets</module>
-        <module>plusminus</module>
-        <module>staircase</module>
-        <module>time-conversion</module>
         <module>algorithms</module>
         <module>collections</module>
         <module>java8</module>
