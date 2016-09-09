@@ -15,7 +15,7 @@ public class NonDivisibleSubset {
 	private List<Integer> numbers = new ArrayList<>();
 
 	private int divider;
-	
+
 	private Map<Integer, Long> counted;
 
 	public static void main(String[] args) throws FileNotFoundException
