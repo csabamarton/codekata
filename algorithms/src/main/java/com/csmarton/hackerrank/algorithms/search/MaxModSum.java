@@ -72,7 +72,7 @@ public class MaxModSum {
 
         TreeSet<Long> set = new TreeSet<>();
         set.add(numbers[0]);
-        
+
         for (Long i = 2L; i < numbers.length; i++) {
             Long currentNumber = numbers[i.intValue()];
             Long ceiling = set.ceiling(currentNumber);
