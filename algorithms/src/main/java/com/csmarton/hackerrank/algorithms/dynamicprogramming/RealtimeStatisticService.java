@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.IntStream;
 
 /**
@@ -15,6 +16,7 @@ public class RealtimeStatisticService
 	public static final int ONE_MIN_IN_LONG = 60 * 1000;
 
 	RealtimeStatistic realtimeStatistic;
+	private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
 	/**
 	 * Returns the realtime statistic of the last 60 seconds. In the best case, this method can be
@@ -26,7 +28,17 @@ public class RealtimeStatisticService
 	 */
 	public RealtimeStatistic getStatisticFromLast60Seconds()
 	{
-		return realtimeStatistic;
+
+		if(lock.isWriteLocked()) {
+			System.out.println("will take the lock from Write");
+		}
+		try {
+			lock.readLock().lock();
+
+			return realtimeStatistic;
+		} finally {
+			lock.readLock().unlock();
+		}
 	}
 
 	/**
@@ -39,18 +51,24 @@ public class RealtimeStatisticService
 
 	public void addTransaction(Transaction transaction)
 	{
-		transactionsInOneMin.addLast(transaction);
+		try {
+			lock.writeLock().lock();
 
-		if (realtimeStatistic.max == 0d) {
-			realtimeStatistic.max = transaction.amount;
-			realtimeStatistic.min = transaction.amount;
-			realtimeStatistic.avg = transaction.amount;
+			transactionsInOneMin.addLast(transaction);
 
-			return;
+			if (realtimeStatistic.max == 0d) {
+				realtimeStatistic.max = transaction.amount;
+				realtimeStatistic.min = transaction.amount;
+				realtimeStatistic.avg = transaction.amount;
+
+				return;
+			}
+
+			removeLateTransactionsAndCorricateStatistics();
+
+		} finally {
+			lock.writeLock().unlock();
 		}
-
-		removeLateTransactionsAndCorricateStatistics();
-
 	}
 
 	private double removeLateTransactionsAndCorricateStatistics()
