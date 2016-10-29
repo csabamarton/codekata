@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
  */
 public class RealtimeStatisticService
 {
-
 	public static final int ONE_MIN_IN_LONG = 60 * 1000;
 
 	RealtimeStatistic realtimeStatistic;
@@ -27,8 +26,7 @@ public class RealtimeStatisticService
 	 */
 	public RealtimeStatistic getStatisticFromLast60Seconds()
 	{
-
-		return null;
+		return realtimeStatistic;
 	}
 
 	/**
@@ -57,7 +55,6 @@ public class RealtimeStatisticService
 
 	private double removeLateTransactionsAndCorricateStatistics()
 	{
-
 		Long timestampMs = new Date().getTime() - ONE_MIN_IN_LONG;
 
 		Iterator<Transaction> iterator = transactionsInOneMin.iterator();
