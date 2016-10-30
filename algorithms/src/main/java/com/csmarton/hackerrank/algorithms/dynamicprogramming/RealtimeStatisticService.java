@@ -15,7 +15,8 @@ public class RealtimeStatisticService
 {
 	public static final int ONE_MIN_IN_LONG = 60 * 1000;
 
-	RealtimeStatistic realtimeStatistic;
+	private RealtimeStatistic realtimeStatistic;
+
 	private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
 	/**
@@ -94,7 +95,7 @@ public class RealtimeStatisticService
 		}
 
 		IntStream.range(0, numOfRemovingTransaction)
-				.forEach(counter -> transactionsInOneMin.removeFirst());
+				 .forEach(counter -> transactionsInOneMin.removeFirst());
 
 		modifyRealTimeSatisticBases(sumOfRemovingTransaction, numOfRemovingTransaction);
 
