@@ -15,9 +15,36 @@ public class RealtimeStatisticService
 {
 	public static final int ONE_MIN_IN_LONG = 60 * 1000;
 
-	private RealtimeStatistic realtimeStatistic;
+	private RealtimeStatistic realtimeStatistic = new RealtimeStatistic();
 
 	private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
+
+	public static void main(String[] args)
+	{
+		RealtimeStatisticService realtimeStatisticService = new RealtimeStatisticService();
+
+		realtimeStatisticService.start();
+	}
+
+	private void start() {
+		Transaction transaction = new Transaction();
+		transaction.setAmount(100d);
+		transaction.setTimestampMs(new Date().getTime());
+
+		addTransaction(transaction);
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		Transaction transaction2 = new Transaction();
+		transaction2.setAmount(200d);
+		transaction2.setTimestampMs(new Date().getTime());
+
+		addTransaction(transaction2);
+	}
 
 	/**
 	 * Returns the realtime statistic of the last 60 seconds. In the best case, this method can be
@@ -58,21 +85,22 @@ public class RealtimeStatisticService
 			transactionsInOneMin.addLast(transaction);
 
 			if (realtimeStatistic.max == 0d) {
-				realtimeStatistic.max = transaction.amount;
-				realtimeStatistic.min = transaction.amount;
-				realtimeStatistic.avg = transaction.amount;
+				realtimeStatistic.setMax(transaction.amount);
+				realtimeStatistic.setMin(transaction.amount);
+				realtimeStatistic.setAvg(transaction.amount);
+				realtimeStatistic.setN(1);
 
 				return;
 			}
 
-			removeLateTransactionsAndCorricateStatistics();
+			removeLateTransactionsAndCorrigateStatistics(transaction.getAmount());
 
 		} finally {
 			lock.writeLock().unlock();
 		}
 	}
 
-	private double removeLateTransactionsAndCorricateStatistics()
+	private double removeLateTransactionsAndCorrigateStatistics(double amountOfNewTransaction)
 	{
 		Long timestampMs = new Date().getTime() - ONE_MIN_IN_LONG;
 
@@ -97,17 +125,18 @@ public class RealtimeStatisticService
 		IntStream.range(0, numOfRemovingTransaction)
 				 .forEach(counter -> transactionsInOneMin.removeFirst());
 
-		modifyRealTimeSatisticBases(sumOfRemovingTransaction, numOfRemovingTransaction);
+		modifyRealTimeSatisticBases(sumOfRemovingTransaction, numOfRemovingTransaction,
+				amountOfNewTransaction);
 
 		return sumOfRemovingTransaction;
 	}
 
 	private void modifyRealTimeSatisticBases(double sumOfRemovingTransaction,
-			int numOfRemovingTransaction)
+			int numOfRemovingTransaction, double amountOfNewTransaction)
 	{
-		realtimeStatistic.setAvg(setNewAvg(sumOfRemovingTransaction, numOfRemovingTransaction));
+		realtimeStatistic.setAvg(setNewAvg(sumOfRemovingTransaction, numOfRemovingTransaction, amountOfNewTransaction));
 
-		realtimeStatistic.setN(realtimeStatistic.getN() - numOfRemovingTransaction);
+		realtimeStatistic.setN(realtimeStatistic.getN() - numOfRemovingTransaction + 1);
 
 		double newMin = realtimeStatistic.getMin();
 		double newMax = realtimeStatistic.getMax();
@@ -127,10 +156,12 @@ public class RealtimeStatisticService
 
 	}
 
-	private double setNewAvg(double sumOfRemovingTransaction, int numOfRemovingTransaction)
+	private double setNewAvg(double sumOfRemovingTransaction, int numOfRemovingTransaction,
+			double amountOfNewTransaction)
 	{
-		return (realtimeStatistic.getAvg() * realtimeStatistic.getN() - sumOfRemovingTransaction)
-				/ (realtimeStatistic.getN() - numOfRemovingTransaction);
+		return (realtimeStatistic.getAvg() * realtimeStatistic.getN() - sumOfRemovingTransaction
+				+ amountOfNewTransaction)
+				/ (realtimeStatistic.getN() - numOfRemovingTransaction + 1);
 	}
 
 	public static class Transaction

@@ -10,7 +10,11 @@ public class SparseArray {
 	private static Map<String, Integer> numOfOccurences = new HashMap<>();
 
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
+
+		String input = "4\n" + "aba\n" + "baba\n" + "aba\n" + "xzxb\n" + "3\n" + "aba\n" + "xzxb\n"
+				+ "ab";
+
+		Scanner in = new Scanner(input);
 
 		int numOfStrings = in.nextInt();
 		in.nextLine();
@@ -21,7 +25,9 @@ public class SparseArray {
 		int numOfQueries = in.nextInt();
 		in.nextLine();
 
-		IntStream.range(0, numOfQueries).forEach(i -> printResult(in.nextLine()));
+		//IntStream.range(0, numOfQueries).forEach(i -> printResult(in.nextLine()));
+
+
 	}
 
 	private static void processString(String word) {
