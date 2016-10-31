@@ -75,7 +75,7 @@ public class RealtimeStatisticService
 	 * @param transaction The new transaction.
 	 */
 
-	Deque<Transaction> transactionsInOneMin = new LinkedList<>();
+	private Deque<Transaction> transactionsInOneMin = new LinkedList<>();
 
 	public void addTransaction(Transaction transaction)
 	{
@@ -85,10 +85,7 @@ public class RealtimeStatisticService
 			transactionsInOneMin.addLast(transaction);
 
 			if (realtimeStatistic.max == 0d) {
-				realtimeStatistic.setMax(transaction.amount);
-				realtimeStatistic.setMin(transaction.amount);
-				realtimeStatistic.setAvg(transaction.amount);
-				realtimeStatistic.setN(1);
+				realtimeStatistic.initStatistics(transaction);
 
 				return;
 			}
@@ -235,6 +232,14 @@ public class RealtimeStatisticService
 		public void setN(long n)
 		{
 			this.n = n;
+		}
+
+		private void initStatistics(Transaction transaction)
+		{
+			setMax(transaction.amount);
+			setMin(transaction.amount);
+			setAvg(transaction.amount);
+			setN(1);
 		}
 	}
 }
