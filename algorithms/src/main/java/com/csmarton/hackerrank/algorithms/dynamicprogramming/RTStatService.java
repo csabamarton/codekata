@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
  * Calculates the realtime statistic of the last 60 seconds. We don't need to write real code, even
  * pseudo code is fine.
  */
-public class RealtimeStatisticService
+public class RTStatService
 {
 	public static final int ONE_MIN_IN_LONG = 60 * 1000;
 
@@ -21,9 +21,9 @@ public class RealtimeStatisticService
 
 	public static void main(String[] args)
 	{
-		RealtimeStatisticService realtimeStatisticService = new RealtimeStatisticService();
+		RTStatService RTStatService = new RTStatService();
 
-		realtimeStatisticService.start();
+		RTStatService.start();
 	}
 
 	private void start() {
@@ -32,6 +32,8 @@ public class RealtimeStatisticService
 		transaction.setTimestampMs(new Date().getTime());
 
 		addTransaction(transaction);
+
+		System.out.println(realtimeStatistic.getAvg());
 
 		try {
 			Thread.sleep(2000);
@@ -44,6 +46,8 @@ public class RealtimeStatisticService
 		transaction2.setTimestampMs(new Date().getTime());
 
 		addTransaction(transaction2);
+
+		System.out.println(realtimeStatistic.getAvg());
 	}
 
 	/**
