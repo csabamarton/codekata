@@ -16,6 +16,7 @@
         <module>java8</module>
         <module>data-structures</module>
         <module>multithread</module>
+        <module>http</module>
     </modules>
 
 
