@@ -17,16 +17,16 @@ public class Amazon {
 	private final static Map<Character, Character> brackets;
 	private final static Set<Character> endBrackets;
 
-    static {
-        Map<Character, Character> modifiableMapForBracket = new HashMap<>();
-        modifiableMapForBracket.put('(', ')');
-        modifiableMapForBracket.put('{', '}');
-        modifiableMapForBracket.put('[', ']');
-        modifiableMapForBracket.put('<', '>');
+	static {
+		Map<Character, Character> modifiableMapForBracket = new HashMap<>();
+		modifiableMapForBracket.put('(', ')');
+		modifiableMapForBracket.put('{', '}');
+		modifiableMapForBracket.put('[', ']');
+		modifiableMapForBracket.put('<', '>');
 
-        brackets = Collections.unmodifiableMap(new HashMap<>(modifiableMapForBracket));
+		brackets = Collections.unmodifiableMap(new HashMap<>(modifiableMapForBracket));
 
-        modifiableMapForBracket.clear();
+		modifiableMapForBracket.clear();
 
 		endBrackets = Collections.unmodifiableSet(new HashSet<>(brackets.values()));
 	}
