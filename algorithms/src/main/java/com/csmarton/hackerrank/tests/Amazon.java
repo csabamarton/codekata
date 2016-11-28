@@ -13,8 +13,8 @@ import java.util.Stack;
 // DEFINE ANY CLASS AND METHOD NEEDED
 // CLASS BEGINS, THIS CLASS IS REQUIRED
 public class Amazon {
-	static Map<Character, Character> brackets = new HashMap<>();
-	private static Set<Character> endBrackets = new HashSet<>();
+	private final static Map<Character, Character> brackets = new HashMap<>();
+	private final static Set<Character> endBrackets = new HashSet<>();
 
 	static {
 		brackets.put('(', ')');
