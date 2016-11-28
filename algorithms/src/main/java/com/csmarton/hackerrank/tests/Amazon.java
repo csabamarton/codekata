@@ -1,6 +1,7 @@
 package com.csmarton.hackerrank.tests;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,16 +14,21 @@ import java.util.Stack;
 // DEFINE ANY CLASS AND METHOD NEEDED
 // CLASS BEGINS, THIS CLASS IS REQUIRED
 public class Amazon {
-	private final static Map<Character, Character> brackets = new HashMap<>();
-	private final static Set<Character> endBrackets = new HashSet<>();
+	private final static Map<Character, Character> brackets;
+	private final static Set<Character> endBrackets;
 
 	static {
-		brackets.put('(', ')');
-		brackets.put('{', '}');
-		brackets.put('[', ']');
-		brackets.put('<', '>');
+		Map<Character, Character> modifiableMapForBracket = new HashMap<>();
+		modifiableMapForBracket.put('(', ')');
+		modifiableMapForBracket.put('{', '}');
+		modifiableMapForBracket.put('[', ']');
+		modifiableMapForBracket.put('<', '>');
 
-		endBrackets.addAll(brackets.values());
+		brackets = Collections.unmodifiableMap(new HashMap<>(modifiableMapForBracket));
+
+		modifiableMapForBracket.clear();
+
+		endBrackets = Collections.unmodifiableSet(new HashSet<>(brackets.values()));
 	}
 
 	private static Stack<Character> stack;
@@ -44,8 +50,7 @@ public class Amazon {
 
 		char[] characters = str.toCharArray();
 
-		List<Character> beginners = new ArrayList<>();
-		beginners.addAll(brackets.keySet());
+		List<Character> beginners = new ArrayList<>(brackets.keySet());
 
 		for (int i = 0; i < characters.length; i++) {
 			char next = characters[i];
