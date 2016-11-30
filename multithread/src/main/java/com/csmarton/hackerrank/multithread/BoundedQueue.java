@@ -8,14 +8,12 @@ public class BoundedQueue<T> {
 	private int headIndex;
 	private int tailIndex;
 
-
 	public BoundedQueue(int limit)
 	{
 		this.limit = limit;
 		this.array = new Object[limit];
 		this.size = 0;
 	}
-
 
 	public synchronized void enqueue(Object data) throws InterruptedException
 	{
@@ -65,7 +63,7 @@ public class BoundedQueue<T> {
 			headIndex = -1;
 			tailIndex = -1;
 
-			return (T) returnValue;
+			return (T)returnValue;
 		}
 
 		array[headIndex] = null;
@@ -81,7 +79,7 @@ public class BoundedQueue<T> {
 			notifyAll();
 		}
 
-        return (T) returnValue;
+		return (T)returnValue;
 	}
 
 	public static void main(String[] args) throws InterruptedException
