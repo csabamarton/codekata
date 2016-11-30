@@ -50,11 +50,13 @@ public class BoundedQueue<T> {
 		}
 	}
 
-	public synchronized void dequeue() throws InterruptedException
+	public synchronized T dequeue() throws InterruptedException
 	{
 		while (size == 0) {
 			wait();
 		}
+
+		Object returnValue = array[headIndex];
 
 		array[headIndex] = null;
 
@@ -63,7 +65,7 @@ public class BoundedQueue<T> {
 			headIndex = -1;
 			tailIndex = -1;
 
-			return;
+			return (T) returnValue;
 		}
 
 		array[headIndex] = null;
@@ -78,6 +80,8 @@ public class BoundedQueue<T> {
 		if (size == limit) {
 			notifyAll();
 		}
+
+        return (T) returnValue;
 	}
 
 	public static void main(String[] args) throws InterruptedException
