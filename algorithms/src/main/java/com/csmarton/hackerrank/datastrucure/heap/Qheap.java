@@ -23,7 +23,7 @@ public class Qheap {
 					return e;
 				}
 			}
-			return null;// not found
+			return null;
 		}
 	}
 
