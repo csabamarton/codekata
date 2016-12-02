@@ -21,7 +21,7 @@ public class Contacts {
 		}
 	}
 
-	private MyNode tries;
+	private MyNode tries = new MyNode();
 
 	private class MyNode {
 		private char letter;
@@ -84,20 +84,7 @@ public class Contacts {
 
 	private void start()
 	{
-        String input = "11\n" +
-                "add s\n" +
-                "add ss\n" +
-                "add sss\n" +
-                "add ssss\n" +
-                "add sssss\n" +
-                "find s\n" +
-                "find ss\n" +
-                "find sss\n" +
-                "find ssss\n" +
-                "find sssss\n" +
-                "find ssssss";
-
-		Scanner in = new Scanner(input);
+		Scanner in = new Scanner(System.in);
 
 		IntStream.range(0, in.nextInt()).forEach(i -> {
 			Action action = Action.getValue(in.next());
@@ -119,11 +106,13 @@ public class Contacts {
 	{
 		MyNode currentNode = tries;
 
-		if (currentNode == null) {
+		if (currentNode == null || currentNode.getChildren() == null) {
 			return null;
 		}
 
-		if (currentNode.getLetter() != word.charAt(0)) {
+		currentNode = currentNode.getChildren().get(word.charAt(0));
+
+		if (currentNode == null) {
 			return null;
 		}
 
@@ -163,31 +152,31 @@ public class Contacts {
 
 	private void add(String param)
 	{
-
 		boolean contains = triesContains(param);
 
-		System.out.print(contains);
+		char letter = param.charAt(0);
+		Map<Character, MyNode> children;
 
 		if (!contains) {
-
 			char[] letters = param.toCharArray();
-
-			MyNode currentNode = tries;
-
-			if (tries == null) {
-				currentNode = createNewNode(param.charAt(0));
-
-				tries = currentNode;
+			if (tries.getChildren() == null) {
+				children = new HashMap<>();
+				tries.setChildren(children);
 			}
 
-            currentNode.incrementNumOfWords();
+			MyNode currentNode = tries.getChildren().get(letter);
 
-			System.out.print(currentNode.getLetter());
+			if (currentNode == null) {
+				currentNode = createNewNode(letter);
+				tries.getChildren().put(letter, currentNode);
+			}
+
+			currentNode.incrementNumOfWords();
 
 			for (int i = 1; i < letters.length; i++) {
-				char letter = letters[i];
+				letter = letters[i];
 
-				Map<Character, MyNode> children = currentNode.getChildren();
+				children = currentNode.getChildren();
 
 				if (children == null) {
 					children = new HashMap<>();
@@ -203,10 +192,7 @@ public class Contacts {
 				currentNode = nextNode;
 
 				currentNode.incrementNumOfWords();
-
-				System.out.print(letter);
 			}
-			System.out.println("END");
 			currentNode.setEnd(true);
 		}
 	}

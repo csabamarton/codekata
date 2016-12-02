@@ -33,7 +33,7 @@ public class Qheap {
 	public static void main(String[] args)
 	{
 		Qheap qheap = new Qheap();
-        
+
 		qheap.start(qheap);
 	}
 
