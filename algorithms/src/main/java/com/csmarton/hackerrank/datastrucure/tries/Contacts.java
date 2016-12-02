@@ -120,8 +120,6 @@ public class Contacts {
 			return currentNode;
 		}
 
-		boolean contains = false;
-
 		for (int i = 1; i < word.length(); i++) {
 			char letter = word.charAt(i);
 
