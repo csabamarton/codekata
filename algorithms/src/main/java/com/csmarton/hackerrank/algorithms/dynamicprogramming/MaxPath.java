@@ -22,7 +22,7 @@ public class MaxPath {
 		System.out.println(twoTokenSolution);
 	}
 
-    private int solveWithOneToken(int[][] apples)
+    public int solveWithOneToken(int[][] apples)
     {
         initGlobalFields(apples);
 
@@ -31,7 +31,7 @@ public class MaxPath {
         return sumArray[0][size - 1];
     }
 
-    private int solveWithTwoToken(int[][] apples)
+    public int solveWithTwoToken(int[][] apples)
 	{
 		initGlobalFields(apples);
 
