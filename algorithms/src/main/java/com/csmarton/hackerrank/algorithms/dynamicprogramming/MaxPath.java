@@ -15,14 +15,23 @@ public class MaxPath {
 
 		int[][] array = maxPath.createMatrix();
 
-		int oneTokeSolution = maxPath.solveWithOneToken(array);
-		System.out.println(oneTokeSolution);
+		int oneTokenSolution = maxPath.solveWithOneToken(array);
+		System.out.println(oneTokenSolution);
 
-		int twoTokeSolution = maxPath.solveWithTwoToken(array);
-		System.out.println(twoTokeSolution);
+		int twoTokenSolution = maxPath.solveWithTwoToken(array);
+		System.out.println(twoTokenSolution);
 	}
 
-	private int solveWithTwoToken(int[][] apples)
+    private int solveWithOneToken(int[][] apples)
+    {
+        initGlobalFields(apples);
+
+        findMaxRoute();
+
+        return sumArray[0][size - 1];
+    }
+
+    private int solveWithTwoToken(int[][] apples)
 	{
 		initGlobalFields(apples);
 
@@ -39,15 +48,6 @@ public class MaxPath {
 		sum += sumArray[0][size - 1];
 
 		return sum;
-	}
-
-	private int solveWithOneToken(int[][] apples)
-	{
-		initGlobalFields(apples);
-
-		findMaxRoute();
-
-		return sumArray[0][size - 1];
 	}
 
 	private void initGlobalFields(int[][] apples)
