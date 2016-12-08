@@ -4,118 +4,154 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class MaxPath {
-    private int[][] array;
-    private int size;
+	private int[][] array;
+	private int[][] sumArray;
+	private int size;
+	int[] startPos;
 
 	public static void main(String[] args)
 	{
 		MaxPath maxPath = new MaxPath();
 
-		maxPath.start();
+		int[][] array = maxPath.createMatrix();
+
+		int oneTokeSolution = maxPath.solveWithOneToken(array);
+		System.out.println(oneTokeSolution);
+
+		int twoTokeSolution = maxPath.solveWithTwoToken(array);
+		System.out.println(twoTokeSolution);
 	}
 
-	private void start()
+	private int solveWithTwoToken(int[][] apples)
 	{
+		initGlobalFields(apples);
 
-        createMatrix();
+		int sum = 0;
 
-        findMaxRoute();
+		findMaxRoute();
+
+		sum += sumArray[0][size - 1];
+
+		clearThePath();
+
+		findMaxRoute();
+
+		sum += sumArray[0][size - 1];
+
+		return sum;
 	}
 
-	private int[] position;
+	private int solveWithOneToken(int[][] apples)
+	{
+		initGlobalFields(apples);
 
+		findMaxRoute();
 
-    private void findMaxRoute() {
+		return sumArray[0][size - 1];
+	}
 
-        int sum = getCurrentValue();
-        int upProfit = calculateUp();
-        int rightProfit = calculateRight();
+	private void initGlobalFields(int[][] apples)
+	{
+		array = apples;
+		size = array[0].length;
+		startPos = new int[] { size - 1, 0 };
+		sumArray = new int[size][size];
+	}
 
-        while (!(position[0] == size - 1 && position[1] == 0)) {
-            if(position[0] == size - 1) {
-                sum += upProfit;
+	private void clearThePath()
+	{
+		startPos = new int[] { 0, size - 1 };
+		array[startPos[0]][startPos[1]] = 0;
 
-                break;
-            }
+		while (!(startPos[0] == size - 1 && startPos[1] == 0)) {
+			if (startPos[0] == size - 1) {
+				startPos[1] -= 1;
+			} else if (startPos[1] == 0) {
+				startPos[0] += 1;
+			} else {
+				int leftValue = sumArray[startPos[0]][startPos[1] - 1];
+				int downValue = sumArray[startPos[0] + 1][startPos[1]];
 
-            if(position[1] == 0) {
-                sum += rightProfit;
+				if (leftValue > downValue) {
+					startPos[1] -= 1;
+				} else {
+					startPos[0] += 1;
+				}
+			}
 
-                break;
-            }
+			array[startPos[0]][startPos[1]] = 0;
+		}
 
-            if (upProfit - getLeftValue() >= rightProfit - getHeadValue()) {
-                position[1] -= - 1;
+	}
 
-                rightProfit = calculateRight();
-                upProfit -= getCurrentValue();
-            } else {
-                position[0] += 1;
+	private void findMaxRoute()
+	{
+		sumArray = new int[size][size];
+		sumArray[size - 1][0] += array[size - 1][0];
 
-                upProfit = calculateUp();
-                rightProfit -= getCurrentValue();
-            }
+		while (!(startPos[0] == 0 && startPos[1] == size - 1)) {
+			updateSumValues();
+			moveDiagonalStart();
+		}
+	}
 
-            sum += getCurrentValue();
-        }
-        System.out.println(sum);
-    }
+	private void updateSumValues()
+	{
+		int xPos = startPos[1];
+		int yPos = startPos[0];
 
+		while (yPos < size && xPos < size) {
+			updateCell(xPos, yPos);
+			xPos++;
+			yPos++;
+		}
+	}
 
+	private void updateCell(int xPos, int yPos)
+	{
+		if (yPos > 0) {
+			int upValue = sumArray[yPos - 1][xPos];
+			int newValue = sumArray[yPos][xPos] + array[yPos - 1][xPos];
+			if (upValue < newValue) {
+				sumArray[yPos - 1][xPos] = newValue;
+			}
+		}
 
-    private int calculateUp() {
-        int sum = 0;
-        for(int i = position[1]; i >= 0; i--) {
-            sum += array[position[0]][i];
-        }
+		if (xPos < size - 1) {
+			int rightValue = sumArray[yPos][xPos + 1];
+			int newValue = sumArray[yPos][xPos] + array[yPos][xPos + 1];
+			if (rightValue < newValue) {
+				sumArray[yPos][xPos + 1] = newValue;
+			}
+		}
+	}
 
-        return sum;
-    }
+	private void moveDiagonalStart()
+	{
+		if (startPos[0] == 0) {
+			startPos[1] += 1;
+		} else {
+			startPos[0] -= 1;
+		}
+	}
 
-    private int calculateRight() {
-        int sum = 0;
-        for(int i = position[0]; i < array[0].length; i++) {
-            sum += array[i][position[1]];
-        }
+	private int[][] createMatrix()
+	{
+		String input = "3\n" + "4 0 1\n" + "1 0 0\n" + "0 4 0";
+		//String input = "3\n" + "4 2 1\n" + "1 4 1\n" + "0 4 0";
 
-        return sum;
-    }
+		Scanner in = new Scanner(input);
 
-    private void createMatrix() {
-        String input = "3\n" + "4 0 1\n" + "1 0 0\n" + "0 4 0";
+		int size = in.nextInt();
 
-        Scanner in = new Scanner(input);
+		int[][] apples = new int[size][size];
 
-        size = in.nextInt();
+		IntStream.range(0, size).forEach(row -> {
+			IntStream.range(0, size).forEach(column -> {
+				apples[row][column] = in.nextInt();
+			});
+		});
 
-        array = new int[size][size];
-
-        IntStream.range(0, size).forEach(row -> {
-            IntStream.range(0, size).forEach(column -> {
-                array[column][row] = in.nextInt();
-            });
-        });
-
-        position = new int[]{0, size - 1};
-    }
-
-    public int getLeftValue() {
-        if (position[0] == array[0].length - 1) {
-            return 0;
-        }
-
-        return array[position[0] + 1][position[1]];
-    }
-
-    public int getHeadValue() {
-        if (position[1] == 0) {
-            return 0;
-        }
-
-        return array[position[0]][position[1] - 1];
-    }
-
-    public int getCurrentValue() {
-        return array[position[0]][position[1]];
-    }
+		return apples;
+	}
 }
