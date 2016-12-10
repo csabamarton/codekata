@@ -9,7 +9,17 @@ public class MaxPath1d {
 
 	public static void main(String[] args)
 	{
+		MaxPath1d maxPath1d = new MaxPath1d();
+		maxPath1d.solve();
+	}
 
+	public void createArray(int[] apples)
+	{
+		array = apples;
+	}
+
+	public void solve()
+	{
 		int size = array.length;
 		sumArray = new int[size];
 		tokens = new int[] { Math.min(array[0], array[1]), Math.max(array[0], array[1]) };
@@ -18,7 +28,7 @@ public class MaxPath1d {
 
 		IntStream.range(2, size).forEach(i -> calculate(i));
 
-		System.out.println(sumArray);
+		System.out.println(sumArray[size - 1]);
 	}
 
 	private static void calculate(int i)

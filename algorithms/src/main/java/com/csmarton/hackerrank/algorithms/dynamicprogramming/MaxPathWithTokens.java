@@ -28,14 +28,10 @@ public class MaxPathWithTokens {
 
         Random random = new Random();
 
-        tokenColumn = new int[size][2];
-
         IntStream.range(0, size).forEach(row -> {
             IntStream.range(0, size).forEach(column -> {
                 apples[row][column] = random.nextInt(1000);
             });
-
-            tokenColumn[row] = new int[]{-1, -1};
         });
 
         return apples;
@@ -47,21 +43,19 @@ public class MaxPathWithTokens {
         //String input = "3\n" + "4 2 1\n" + "1 4 1\n" + "0 4 0";
         //String input = "3\n" + "0 0 0\n" + "1 3 0\n" + "0 0 0";
 
-        String input = "4\n" + "5 20 6 9\n" + "8 1 1 7\n" + "2 5 3 3\n" + "11 2 22 0";
+        //String input = "4\n" + "5 20 6 9\n" + "8 1 1 7\n" + "2 5 3 3\n" + "11 2 22 0";
+        String input = "3\n" + "20 0 0\n" + "0 10 14\n" + "0 0 0";
+
         Scanner in = new Scanner(input);
 
         int size = in.nextInt();
 
         int[][] apples = new int[size][size];
 
-        tokenColumn = new int[size][2];
-
         IntStream.range(0, size).forEach(row -> {
             IntStream.range(0, size).forEach(column -> {
                 apples[row][column] = in.nextInt();
             });
-
-            tokenColumn[row] = new int[]{-1, -1};
         });
 
         return apples;
@@ -82,6 +76,13 @@ public class MaxPathWithTokens {
         size = array[0].length;
         startPos = new int[] { size - 1, 0};
         sumArray = new int[size][size];
+
+        tokenColumn = new int[size][2];
+
+        IntStream.range(0, size).forEach(row -> {
+            tokenColumn[row] = new int[]{-1, -1};
+        });
+
     }
 
     private void findMaxRoute()

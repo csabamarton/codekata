@@ -1,5 +1,6 @@
 package com.csmarton.hackerrank.algorithms.dynamicprogramming;
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -13,41 +14,23 @@ public class MaxPath {
 	{
 		MaxPath maxPath = new MaxPath();
 
-		int[][] array = maxPath.createMatrix();
+		//int[][] array = maxPath.generateMatrix(1000);
+        int[][] array = maxPath.createMatrix();
 
 		int oneTokenSolution = maxPath.solveWithOneToken(array);
 		System.out.println(oneTokenSolution);
 
-		int twoTokenSolution = maxPath.solveWithTwoToken(array);
-		System.out.println(twoTokenSolution);
+        //System.out.println(maxPath.getPath());
+
 	}
 
-    public int solveWithOneToken(int[][] apples)
-    {
-        initGlobalFields(apples);
-
-        findMaxRoute();
-
-        return sumArray[0][size - 1];
-    }
-
-    public int solveWithTwoToken(int[][] apples)
+	public int solveWithOneToken(int[][] apples)
 	{
 		initGlobalFields(apples);
 
-		int sum = 0;
-
 		findMaxRoute();
 
-		sum += sumArray[0][size - 1];
-
-		clearThePath();
-
-		findMaxRoute();
-
-		sum += sumArray[0][size - 1];
-
-		return sum;
+		return sumArray[0][size - 1];
 	}
 
 	private void initGlobalFields(int[][] apples)
@@ -58,10 +41,15 @@ public class MaxPath {
 		sumArray = new int[size][size];
 	}
 
-	private void clearThePath()
+	public int[] getPath()
 	{
+        int[] path = new int[2 * size - 1];
+
 		startPos = new int[] { 0, size - 1 };
-		array[startPos[0]][startPos[1]] = 0;
+
+        path[path.length - 1] = array[startPos[0]][startPos[1]];
+
+        int pathIndex = path.length - 2;
 
 		while (!(startPos[0] == size - 1 && startPos[1] == 0)) {
 			if (startPos[0] == size - 1) {
@@ -79,9 +67,10 @@ public class MaxPath {
 				}
 			}
 
-			array[startPos[0]][startPos[1]] = 0;
+            path[pathIndex--] = array[startPos[0]][startPos[1]];
 		}
 
+		return path;
 	}
 
 	private void findMaxRoute()
@@ -135,11 +124,28 @@ public class MaxPath {
 		}
 	}
 
+	private int[][] generateMatrix(int size) {
+        int[][] apples = new int[size][size];
+
+        Random random = new Random();
+
+        IntStream.range(0, size).forEach(row -> {
+            IntStream.range(0, size).forEach(column -> {
+                apples[row][column] = random.nextInt(1000);
+            });
+        });
+
+        return apples;
+    }
+
 	private int[][] createMatrix()
 	{
-		String input = "3\n" + "4 0 1\n" + "1 0 0\n" + "0 4 0";
-		//String input = "3\n" + "4 2 1\n" + "1 4 1\n" + "0 4 0";
+        //String input = "3\n" + "4 0 1\n" + "1 0 0\n" + "0 4 0";
+		// String input = "3\n" + "4 2 1\n" + "1 4 1\n" + "0 4 0";
 
+        String input = "4\n" + "5 20 6 9\n" + "8 1 1 7\n" + "2 5 3 3\n" + "11 2 22 0";
+
+        //String input = "3\n" + "20 0 0\n" + "0 10 14\n" + "0 0 0";
 		Scanner in = new Scanner(input);
 
 		int size = in.nextInt();
