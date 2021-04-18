@@ -17,6 +17,7 @@
         <module>data-structures</module>
         <module>multithread</module>
         <module>http</module>
+        <module>design-patterns</module>
     </modules>
 
 
