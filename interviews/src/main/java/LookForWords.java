@@ -22,7 +22,8 @@ public class LookForWords {
 
         Map<String, String> result = readFromInputStream(inputStream);
 
-        writeOutResult(result, inputFileName);
+        Path targetPath = Paths.get(this.getClass().getResource("/").getPath());
+        writeOutResult(result, inputFileName, targetPath);
 
         System.out.println(result);
     }
@@ -43,7 +44,7 @@ public class LookForWords {
         return wordsInLine;
     }
 
-    private void processLine(Map<String, String> wordsInLine, String line, int lineNum, boolean caseSensititve) {
+    public void processLine(Map<String, String> wordsInLine, String line, int lineNum, boolean caseSensititve) {
         Stream<String> stream = Arrays.stream(line.split(" "));
 
         if(caseSensititve) {
@@ -61,10 +62,10 @@ public class LookForWords {
         }
     }
 
-    private void writeOutResult(Map<String, String> result, String inputFileName) throws IOException {
+    private void writeOutResult(Map<String, String> result, String inputFileName, Path targetPath) throws IOException {
         SortedSet<String> keys = new TreeSet<>(result.keySet());
 
-        Path fullResultFilePath = setupResultFile(inputFileName);
+        Path fullResultFilePath = setupResultFile(targetPath, inputFileName);
 
         try (BufferedWriter writer = Files.newBufferedWriter(fullResultFilePath))
         {
@@ -74,8 +75,7 @@ public class LookForWords {
         }
     }
 
-    private Path setupResultFile(String inputFileName) throws IOException {
-        Path targetPath = Paths.get(this.getClass().getResource("/").getPath());
+    public Path setupResultFile(Path targetPath, String inputFileName) throws IOException {
         Path resultFolder = Paths.get(targetPath.toAbsolutePath() + "/result/");
 
         //cleanUp
