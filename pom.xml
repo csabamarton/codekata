@@ -18,6 +18,7 @@
         <module>multithread</module>
         <module>http</module>
         <module>design-patterns</module>
+        <module>interviews</module>
     </modules>
 
 

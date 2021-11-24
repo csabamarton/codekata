@@ -1,0 +1,5 @@
+hungry 1
+is 1,2
+Peter 1,2
+Hungry 2
+eating 2
