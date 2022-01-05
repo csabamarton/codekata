@@ -15,7 +15,7 @@ class JumpingOnCloudsTest {
 
     public static Stream<Arguments> inputProvider() {
         return Stream.of(
-                Arguments.of(List.of(0, 0, 1, 0, 0, 1, 0), 3)
+                Arguments.of(List.of(0, 0, 1, 0, 0, 1, 0), 4)
         );
     }
 
@@ -24,6 +24,6 @@ class JumpingOnCloudsTest {
     public void testSolution(List<Integer> clouds, int expectedMinJumps) {
         int result = jumpingOnClouds.solution(clouds);
 
-        assertEquals(result, expectedMinJumps);
+        assertEquals(expectedMinJumps, result);
     }
 }
