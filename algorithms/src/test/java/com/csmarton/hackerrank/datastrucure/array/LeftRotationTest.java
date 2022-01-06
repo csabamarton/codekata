@@ -14,7 +14,10 @@ class LeftRotationTest {
 
     public static Stream<Arguments> paramProvider() {
         return Stream.of(
-                Arguments.of(List.of(1,2,3), 2, List.of(2,3,1))
+                Arguments.of(List.of(1,2,3), 2, List.of(3,1,2)),
+                Arguments.of(List.of(1,2,3, 4, 5), 4, List.of(5,1,2,3,4)),
+                Arguments.of(List.of(33, 47, 70, 37, 8, 53, 13, 93, 71, 72, 51, 100, 60, 87, 97), 13,
+                        List.of(87, 97, 33, 47, 70, 37, 8, 53, 13, 93, 71, 72, 51, 100, 60))
         );
     }
 
