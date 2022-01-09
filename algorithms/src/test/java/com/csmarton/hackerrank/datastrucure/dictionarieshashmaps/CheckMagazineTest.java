@@ -15,7 +15,11 @@ class CheckMagazineTest {
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
                 Arguments.of(List.of("give", "me", "one", "grand", "today", "night"),
-                        List.of("give", "one", "grand", "today"), true)
+                        List.of("give", "one", "grand", "today"), true),
+                Arguments.of(List.of("two","times","three","is","not","four") ,
+                        List.of("two","times","two","is","four"), false),
+                Arguments.of(List.of("two","two") ,
+                        List.of("two","two"), true)
         );
     }
 
