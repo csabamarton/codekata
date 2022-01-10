@@ -11,16 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class TwoStringsTest {
     TwoStrings twoStrings = new TwoStrings();
 
-    private Stream<Arguments> paramProvider() {
+    private static Stream<Arguments> paramProvider() {
         return Stream.of(
-                Arguments.of("", "", true)
+                Arguments.of("and", "art", "YES"),
+                Arguments.of("and", "ert", "NO")
         );
     }
 
     @ParameterizedTest
     @MethodSource("paramProvider")
-    public void testSolution(String firstText, String secondText, boolean expectedResult) {
-        boolean matchedSubString = twoStrings.solution(firstText, secondText);
+    public void testSolution(String firstText, String secondText, String expectedResult) {
+        String matchedSubString = twoStrings.solution(firstText, secondText);
 
         assertEquals(expectedResult, matchedSubString);
     }
