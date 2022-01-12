@@ -13,7 +13,10 @@ class SherlockAndAnagramsTest {
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
-                Arguments.of("kkkk", 10)
+                Arguments.of("ifailuhkqq", 3),
+                Arguments.of("kkkk", 10),
+                Arguments.of("abba", 4),
+                Arguments.of("abcd", 0)
         );
     }
 
