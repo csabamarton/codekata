@@ -1,18 +1,129 @@
 package com.csmarton.hackerrank.datastrucure.dictionarieshashmaps;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SherlockAndAnagrams {
 
-    public int solution(String s) {
+    public int solution3(String s) {
+        int numofAnagrams = 0 ;
+
+        Map<String, Integer> subStringOccurences = new HashMap<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i; j < s.length(); j++) {
+                char[] chars = s.substring(i, j + 1).toCharArray();
+                Arrays.sort(chars);
+                String sortedSubString = String.valueOf(chars);
+
+                if(subStringOccurences.containsKey(sortedSubString)){
+                    subStringOccurences.put(sortedSubString, subStringOccurences.get(sortedSubString) + 1);
+                } else {
+                    subStringOccurences.put(sortedSubString, 1);
+                }
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : subStringOccurences.entrySet()) {
+            if(entry.getValue() > 1) {
+                numofAnagrams = numofAnagrams + (entry.getValue() * (entry.getValue() - 1))/2 ;
+            }
+        }
+
+        return numofAnagrams;
+    }
+
+    public int solution2(String s) {
         int numOfAnagrams = 0;
+
+        int numOfWhileLoop = 0;
 
         String[] strings = s.split("");
 
         Map<String, Integer> baseMap = new HashMap<>();
+        Map<String, Integer> comparedMap = new HashMap<>();
+
+        List<Integer> matchedStartIndexes = new ArrayList<>();
+        int anagramSize = 1;
+
+        String[] split = s.
+                substring(0, 0 + anagramSize)
+                .split("");
+        baseMap.clear();
+        for (String letter: split) {
+            if(!baseMap.containsKey(letter)){
+                baseMap.put(letter, 1);
+            } else {
+                baseMap.put(letter, baseMap.get(letter) + 1);
+            }
+        }
+
+        boolean foundedMatch;
+        for (int startIndex = 0; startIndex < s.length() - anagramSize; startIndex++) {
+            comparedMap.clear();
+            baseMap.clear();
+            baseMap.put(strings[startIndex], 1);
+            comparedMap.putAll(baseMap);
+
+            foundedMatch = true;
+            for(anagramSize = 1; anagramSize < s.length() ; anagramSize++) {
+
+                int firstIndexOfComparedString = startIndex + 1;
+
+                if (anagramSize > 1 && !foundedMatch) {
+                    break;
+                } else {
+                    comparedMap.clear();
+                    comparedMap.putAll(baseMap);
+
+                    foundedMatch = false;
+                    while (firstIndexOfComparedString + anagramSize <= s.length()) {
+                        numOfWhileLoop++;
+
+                        String addLetter = strings[firstIndexOfComparedString + anagramSize - 1];
+                        String removedLetter = strings[firstIndexOfComparedString - 1];
+
+                        shiftMapToRight(comparedMap, addLetter, removedLetter);
+
+                        if (areEqual(baseMap, comparedMap)) {
+                            System.out.println("match! Base: " + s.substring(startIndex, startIndex + anagramSize) + " / " + s.substring(firstIndexOfComparedString, firstIndexOfComparedString + anagramSize));
+                            matchedStartIndexes.add(startIndex);
+                            numOfAnagrams++;
+                            foundedMatch = true;
+                        } else {
+
+                        }
+
+                        firstIndexOfComparedString++;
+                    }
+
+                }
+
+                if(startIndex + anagramSize < s.length()) {
+                    String letter = strings[startIndex + anagramSize];
+                    if(!baseMap.containsKey(letter)){
+                        baseMap.put(letter, 1);
+                    } else {
+                        baseMap.put(letter, baseMap.get(letter) + 1);
+                    }
+                }
+            }
+
+            anagramSize = 1;
+        }
+
+        System.out.println("Num of While Loop: " + numOfWhileLoop);
+        return numOfAnagrams;
+    }
+
+
+    public int solution(String s) {
+        int numOfAnagrams = 0;
+        int numOfWhileLoop = 0;
+
+        String[] strings = s.split("");
+
+        Map<String, Integer> baseMap = new HashMap<>();
+        Map<String, Integer> comparedMap = new HashMap<>();
 
         List<Integer> matchedStartIndexes = new ArrayList<>();
 
@@ -30,29 +141,28 @@ public class SherlockAndAnagrams {
                 }
             for (int startIndex = 0; startIndex < s.length() - anagramSize; startIndex++) {
 
-                if(anagramSize > 1 && !matchedStartIndexes.contains(startIndex)) {
-                    continue;
-                }
-
                 int firstIndexOfComparedString = startIndex + 1;
 
-                Map<String, Integer> comparedMap = new HashMap<>();
+                comparedMap.clear();
                 comparedMap.putAll(baseMap);
 
-                while (firstIndexOfComparedString + anagramSize <= s.length()) {
-                    String addLetter = strings[firstIndexOfComparedString + anagramSize - 1];
-                    String removedLetter = strings[firstIndexOfComparedString - 1];
+                if(anagramSize > 1 && !matchedStartIndexes.contains(startIndex)) {
+                    continue;
+                } else {
+                    while (firstIndexOfComparedString + anagramSize <= s.length()) {
+                        numOfWhileLoop++;
+                        String addLetter = strings[firstIndexOfComparedString + anagramSize - 1];
+                        String removedLetter = strings[firstIndexOfComparedString - 1];
 
-                    shiftMapToRight(comparedMap, addLetter, removedLetter);
+                        shiftMapToRight(comparedMap, addLetter, removedLetter);
 
-                    if(areEqual(baseMap, comparedMap)) {
-                        System.out.println("match! Base: " + s.substring(startIndex, startIndex + anagramSize) + " / " + s.substring(firstIndexOfComparedString, firstIndexOfComparedString + anagramSize));
+                        if (areEqual(baseMap, comparedMap)) {
+                            matchedStartIndexes.add(startIndex);
+                            numOfAnagrams++;
+                        }
 
-                        matchedStartIndexes.add(startIndex);
-                        numOfAnagrams++;
+                        firstIndexOfComparedString++;
                     }
-
-                    firstIndexOfComparedString++;
                 }
 
                 String addLetter = strings[startIndex + anagramSize];
@@ -61,6 +171,8 @@ public class SherlockAndAnagrams {
             }
 
         }
+
+        System.out.println("Num of While Loop: " + numOfWhileLoop);
         return numOfAnagrams;
     }
 
