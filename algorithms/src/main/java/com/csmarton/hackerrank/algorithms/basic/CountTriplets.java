@@ -1,9 +1,8 @@
 package com.csmarton.hackerrank.algorithms.basic;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 public class CountTriplets {
@@ -56,5 +55,56 @@ public class CountTriplets {
         }
 
         return numOfTriplets;
+    }
+
+
+    public long solution2(List<Long> numbers, long ratio) {
+        long numOfTriplets = 0;
+
+        Map<Long, List<Integer>> numOfOccurences = new HashMap<>();
+
+        for (int i = 0; i < numbers.size(); i++) {
+            Long baseNumber = ((Number) numbers.get(i)).longValue();
+            if(numOfOccurences.containsKey(baseNumber)) {
+                numOfOccurences.get(baseNumber).add(i);
+            } else
+                numOfOccurences.put(baseNumber, new ArrayList<>(Arrays.asList(i)));
+        }
+
+        Map<Integer, List<Integer>> numMap= new HashMap<>();
+
+        for (int i = 0; i < numbers.size(); i++) {
+            Long baseNumber = ((Number) numbers.get(i)).longValue();
+
+            final int index = i;
+
+            List<Integer> ratioedIndexes = new ArrayList<>();
+            if (numOfOccurences.containsKey(baseNumber * ratio))
+            {
+                ratioedIndexes = numOfOccurences.get(baseNumber * ratio);
+                ratioedIndexes = ratioedIndexes.stream().filter(num -> num > index).collect(Collectors.toList());
+            }
+
+            numMap.put(i, ratioedIndexes);
+        }
+
+        for (int i = 0; i < numbers.size(); i++) {
+            List<Integer> secondNode = numMap.get(i);
+            long count = secondNode.stream().parallel().map(key -> numMap.get(key).size()).mapToInt(Integer::valueOf).sum();
+            numOfTriplets += count;
+        }
+
+        return numOfTriplets;
+    }
+
+    private void checkLeaf(Integer index, List<Integer> routeLengths, Map<Integer, List<Integer>> numMap, int depth) {
+        List<Integer> leafIndexes = numMap.get(index);
+        if (leafIndexes.isEmpty()) {
+            routeLengths.add(depth);
+            return;
+        }
+        for (Integer leafIndex: leafIndexes) {
+            checkLeaf(leafIndex, routeLengths, numMap, depth + 1);
+        }
     }
 }
