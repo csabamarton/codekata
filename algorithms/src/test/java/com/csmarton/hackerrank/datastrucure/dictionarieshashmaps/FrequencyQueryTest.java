@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -59,22 +61,20 @@ class FrequencyQueryTest {
         Path workingDir = Path.of("", "src/test/resources/frequencyquery");
         Path file = workingDir.resolve(testFileName);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file.toString()));;
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file.toString()));
+
         int q = Integer.parseInt(bufferedReader.readLine().trim());
-
         List<int[]> queries = new ArrayList<>(q);
-
-        IntStream.range(0, q).forEach(i -> {
-            try {
-                queries.add(
-                        Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
-                                .mapToInt(Integer::parseInt).toArray()
-
-                );
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+        Pattern p  = Pattern.compile("^(\\d+)\\s+(\\d+)\\s*$");
+        for (int i = 0; i < q; i++) {
+            int[] query = new int[2];
+            Matcher m = p.matcher(bufferedReader.readLine());
+            if (m.matches()) {
+                query[0] = Integer.parseInt(m.group(1));
+                query[1] = Integer.parseInt(m.group(2));
+                queries.add(query);
             }
-        });
+        }
 
         bufferedReader.close();
 
@@ -84,13 +84,8 @@ class FrequencyQueryTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     public void testSolution(List<int[]> input, List<Integer> expectedResult) throws Exception {
-        List<Integer> solution = frequencyQuery.solution(input, expectedResult);
-
-        for (int i = 0; i < solution.size(); i++) {
-            if (solution.get(i) != expectedResult.get(i))
-                System.out.println(solution.get(i));
-
-        }
+       List<Integer> solution = frequencyQuery.solution(input);
+       //List<Integer> solution = frequencyQuery.freqQuery(input);
 
         assertNotNull(solution);
         assertArrayEquals(expectedResult.toArray(), solution.toArray());

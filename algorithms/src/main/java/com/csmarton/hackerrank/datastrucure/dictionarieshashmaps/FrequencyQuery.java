@@ -3,32 +3,47 @@ package com.csmarton.hackerrank.datastrucure.dictionarieshashmaps;
 import java.util.*;
 
 public class FrequencyQuery {
-    public List<Integer> solution(List<int[]> input, List<Integer> expectedResult) throws Exception {
+    public List<Integer> solution(List<int[]> input) {
         List<Integer> printouts = new ArrayList<>();
-        Map<Integer, Long> numberMap = new HashMap<>();
+        Map<Integer, Integer> numberMap = new HashMap<>();
+        Map<Integer, Integer> numberCounts = new HashMap<>();
 
-        int i = 0;
+        Integer oldFreq;
+        Integer newFreq;
+        Integer oldOccurrence;
+        Integer newOccurrence;
+
         for (int[] action : input) {
             int command = action[0];
             int number = action[1];
-            if(command == 1) {
-                if(!numberMap.containsKey(number))
-                    numberMap.put(number, 1L);
-                else
-                    numberMap.put(number, numberMap.get(number) + 1);
-            } else if(command == 2) {
-                if(numberMap.containsKey(number))
-                {
-                    Long numInMap = numberMap.get(number);
-                    if (numInMap == 1) numberMap.remove(number);
-                    else numberMap.put(number, numInMap--);
+
+            if(command == 3) {
+               printouts.add(numberCounts.get(number) == null ? 0:1);
+            }else {
+                oldFreq = numberMap.get(number);
+                oldFreq = oldFreq == null ? 0 : oldFreq;
+                oldOccurrence = numberCounts.get(oldFreq);
+                oldOccurrence = oldOccurrence == null ? 0 : oldOccurrence;
+
+                if(command == 1) newFreq = oldFreq + 1;
+                else newFreq = oldFreq - 1;
+
+                newOccurrence = numberCounts.get(newFreq);
+                newOccurrence = newOccurrence == null ? 0 : newOccurrence;
+
+                if (newFreq < 1) {
+                    numberMap.remove(number);
+                } else {
+                    numberMap.put(number, newFreq);
                 }
-            } else if(command == 3) {
-                Optional<Long> result = numberMap.values().stream().filter(value -> number == value).findFirst();
-                printouts.add(result.isPresent() ? 1 : 0);
-                System.out.println();
-                i++;
-            } else throw new Exception("Wrong data");
+
+                if ((oldOccurrence - 1) < 1) {
+                    numberCounts.remove(oldFreq);
+                } else {
+                    numberCounts.put(oldFreq, oldOccurrence - 1);
+                }
+                numberCounts.put(newFreq, newOccurrence + 1);
+            }
         }
 
         return printouts;
