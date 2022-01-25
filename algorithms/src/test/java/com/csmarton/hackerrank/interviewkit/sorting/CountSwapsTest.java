@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,14 +15,14 @@ class CountSwapsTest {
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
-                Arguments.of(List.of(6, 4, 1), List.of(3, 1, 6))
+                Arguments.of(Stream.of(6, 4, 1).collect(Collectors.toList()), List.of("3", "1", "6"))
         );
     }
 
     @ParameterizedTest
     @MethodSource("paramProvider")
     public void testSolution(List<Integer> initialList, List<Integer> expectedResults) {
-        List<Integer> result = countSwaps.solution(initialList);
+        List<String> result = countSwaps.solution(initialList);
 
         assertNotNull(result);
         assertTrue(result.size() == 3);
