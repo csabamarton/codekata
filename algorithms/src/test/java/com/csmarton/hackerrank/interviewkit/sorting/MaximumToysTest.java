@@ -15,16 +15,16 @@ class MaximumToysTest {
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
-                Arguments.of(Stream.of(6, 4, 1).collect(Collectors.toList()), List.of("3", "1", "6"))
+                Arguments.of(Stream.of(1, 12, 5, 111, 200, 1000, 10).collect(Collectors.toList()), 50, 4)
         );
     }
 
     @ParameterizedTest
     @MethodSource("paramProvider")
-    public void testSolution(List<Integer> initialList, int k, int expectedResults) {
-        int result = maximumToys.solution(initialList, k);
+    public void testSolution(List<Integer> list, int budget, int expectedNumofToys) {
+        int result = maximumToys.solution(list, budget);
 
-        assertEquals(expectedResults, result);
+        assertEquals(expectedNumofToys, result);
     }
 
 
