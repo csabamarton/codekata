@@ -21,7 +21,7 @@ class TwoSumTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     public void testSolution(int[] numbers, int target, int[] expectedPair) {
-        int[] result = twoSum.solution(numbers, target);
+        int[] result = twoSum.solutionAfter3Weeks(numbers, target);
 
         assertArrayEquals(expectedPair, result);
     }

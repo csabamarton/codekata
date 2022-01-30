@@ -2,6 +2,7 @@ package com.csmarton.hackerrank.algorithms.basic;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TwoSum {
@@ -45,4 +46,38 @@ public class TwoSum {
 
         return new int[]{-1,-1};
     }
-}
+
+
+    public int[] solutionAfter3Weeks(int[] numbers, int target) {
+        Map<Integer, Integer> numIndexes = new HashMap<>();
+
+        for (int i = 0; i < numbers.length; i++) {
+            numIndexes.put(numbers[i], i);
+        }
+
+        for (int i = 0; i < numbers.length; i++) {
+            int oppositeNumber = target - numbers[i];
+            if(numIndexes.containsKey(oppositeNumber) && numIndexes.get(oppositeNumber) != i)
+                return new int[]{i, numIndexes.get(oppositeNumber)};
+        }
+
+        return new int[] {-1,-1};
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
