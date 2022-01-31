@@ -36,7 +36,7 @@ class SearchInsertTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     public void testSolution(int[] nums, int target, int expectedIndex) {
-        int result = searchInsert.solution(nums, target);
+        int result = searchInsert.solution2(nums, target);
 
         assertEquals(expectedIndex, result);
     }
