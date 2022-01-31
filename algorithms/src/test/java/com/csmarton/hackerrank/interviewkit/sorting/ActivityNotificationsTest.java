@@ -22,7 +22,7 @@ class ActivityNotificationsTest {
         return Stream.of(
                 createArguments("fraud/input3", 926),
                 createArguments("fraud/input2", 492),
-                createArguments("fraud/input1", 770),
+               createArguments("fraud/input1", 770),
                 Arguments.of(Stream.of(60, 20, 100, 30, 10).collect(Collectors.toList()), 3, 0),
                 Arguments.of(Stream.of(10, 20, 30, 40, 50).collect(Collectors.toList()), 3, 1),
                 Arguments.of(Stream.of(2, 3, 4, 2, 3, 6, 8, 4, 5).collect(Collectors.toList()), 5, 2)
@@ -54,7 +54,7 @@ class ActivityNotificationsTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     public void testSolution(List<Integer> expenditure, int days, int expectedNumOfNotice) {
-        int result = activityNotifications.solution(expenditure, days);
+        int result = activityNotifications.solution2(expenditure, days);
 
         assertEquals(expectedNumOfNotice, result);
     }
