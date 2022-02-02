@@ -80,7 +80,10 @@ public class ActivityNotifications {
 
             subList.remove(expenditure.get(i));
 
-            int index = 0;
+            int insertPosition = findInsertPosition(subList, nextExpense);
+            subList.add(insertPosition);
+
+            /*int index = 0;
             boolean foundPosition = false;
             while (!foundPosition && index < subList.size()) {
                 if (subList.get(index) > nextExpense) {
@@ -93,6 +96,8 @@ public class ActivityNotifications {
                 subList.add(index, nextExpense);
             else
                 subList.add(nextExpense);
+
+             */
         }
 
         return numOfNotice;
@@ -122,5 +127,51 @@ public class ActivityNotifications {
         }
 
         return linkedList.get(medianPositions.get(0));
+    }
+
+    public int solution2(int[] nums, int target) {
+        return binarySearch(nums, target, 0, nums.length -1);
+    }
+
+    private int binarySearch(int[] nums, int target, int left, int right) {
+        int index;
+
+        if (left <= right) {
+            int mid = (right + left) / 2;
+
+            if (target == nums[mid])
+                return mid;
+
+            if (target < nums[mid])
+                return binarySearch(nums, target, left, mid - 1);
+            else
+                return binarySearch(nums, target, mid + 1, right);
+        } else
+            index = left;
+
+        return index;
+    }
+
+    public int findInsertPosition(List<Integer> nums, int target) {
+        return binarySearch(nums, target, 0, nums.size() -1);
+    }
+
+    private int binarySearch(List<Integer> nums, int target, int left, int right) {
+        int index;
+
+        if (left <= right) {
+            int mid = (right + left) / 2;
+
+            if (target == nums.get(mid))
+                return mid;
+
+            if (target < nums.get(mid))
+                return binarySearch(nums, target, left, mid - 1);
+            else
+                return binarySearch(nums, target, mid + 1, right);
+        } else
+            index = left;
+
+        return index;
     }
 }
