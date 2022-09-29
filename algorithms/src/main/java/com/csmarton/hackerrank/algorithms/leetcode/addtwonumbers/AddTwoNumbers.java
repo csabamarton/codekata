@@ -13,7 +13,6 @@ public class AddTwoNumbers {
      */
 
     public ListNode addTwoNumbers(ListNode node1, ListNode node2) {
-
         ListNode sumNode = recurciveAdd(node1, node2, false);
 
         return sumNode;
