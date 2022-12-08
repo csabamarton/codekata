@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RomanNumbersTest {
 
     RomanNumbers romanNumbers = new RomanNumbers();
+    RomanNumberConverter romanNumberConverter = new RomanNumberConverter();
 
     public static Stream<Arguments> paramProvider() {
         return Stream.of(
@@ -19,7 +20,8 @@ class RomanNumbersTest {
                 Arguments.of("MCMXCIV", 1994),
                 Arguments.of("LVIII", 58),
                 Arguments.of("III", 3),
-                Arguments.of("DCCII", 702)
+                Arguments.of("DCCII", 702),
+                Arguments.of("DCACII", 702)
         );
     }
 
@@ -27,9 +29,11 @@ class RomanNumbersTest {
     @ParameterizedTest()
     @MethodSource("paramProvider")
     void testRomanNumbersConverter(String input, int expectedNumber) {
-        int resultNumber = romanNumbers.convertRomanToInt(input);
+        //int resultNumber = romanNumbers.convertRomanToInt(input);
+        int resultNumberWithEnumConverter = romanNumberConverter.convertRomanToInt(input);
 
-        assertEquals(expectedNumber, resultNumber);
+       // assertEquals(expectedNumber, resultNumber);
+        assertEquals(expectedNumber, resultNumberWithEnumConverter);
     }
 
 }
