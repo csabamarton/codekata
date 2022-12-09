@@ -19,8 +19,8 @@ public class ValidParentheses {
         SQUARE('[', ']'),
         DUCK('{','}');
 
-        private char openBracket;
-        private char closeBracket;
+        private final char openBracket;
+        private final char closeBracket;
 
         Bracket(char openBracket, char closeBracket) {
             this.openBracket = openBracket;
