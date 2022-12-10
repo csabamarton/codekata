@@ -1,7 +1,7 @@
 package com.csmarton.hackerrank.algorithms.leetcode.easy.removeelement;
 
 public class RemoveElement {
-    public int removeElement(int[] nums, int val) {
+    public int removeElement(int[] nums, final int val) {
 
         if (nums.length == 0)
             return 0;
