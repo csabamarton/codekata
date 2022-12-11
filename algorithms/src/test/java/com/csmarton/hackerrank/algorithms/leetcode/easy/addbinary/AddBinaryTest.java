@@ -28,4 +28,13 @@ class AddBinaryTest {
 
         assertEquals(expectedResult, result);
     }
+
+    @Test
+    @ParameterizedTest
+    @MethodSource("paramProviderForAddingBinary")
+    void testAddingBinaryNumbersShort(String aInput, String bInput, String expectedResult) {
+        String result = addBinary.addBinary2(aInput, bInput);
+
+        assertEquals(expectedResult, result);
+    }
 }

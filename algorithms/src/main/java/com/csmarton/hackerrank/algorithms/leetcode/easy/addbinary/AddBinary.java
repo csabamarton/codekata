@@ -4,6 +4,23 @@ public class AddBinary {
     private static final char ONE = '1';
     private static final char ZERO = '0';
 
+    public String addBinary2(String a, String b) {
+        boolean carry = false;
+        int indexA = a.length() - 1;
+        int indexB = b.length() - 1;
+
+        StringBuilder sb = new StringBuilder();
+
+        while (indexA >= 0 || indexB >= 0 || carry) {
+            int digitA = indexA < 0 ? 0 : a.charAt(indexA--) - '0';
+            int digitB = indexB < 0 ? 0 : b.charAt(indexB--) - '0';
+            sb.insert(0, (digitA + digitB + (carry ? 1 : 0)) % 2);
+            carry = (digitA + digitB + (carry ? 1 : 0)) / 2 == 1;
+        }
+
+        return sb.toString();
+    }
+
     public String addBinary(String a, String b) {
         int lengthA = a.length();
         int lengthB = b.length();
