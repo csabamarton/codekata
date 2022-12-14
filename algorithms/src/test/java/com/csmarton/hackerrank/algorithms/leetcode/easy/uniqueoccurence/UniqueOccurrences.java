@@ -1,4 +1,4 @@
-package com.csmarton.hackerrank.algorithms.leetcode.easy.fizzbuzz;
+package com.csmarton.hackerrank.algorithms.leetcode.easy.uniqueoccurence;
 
 import java.util.HashMap;
 import java.util.HashSet;
