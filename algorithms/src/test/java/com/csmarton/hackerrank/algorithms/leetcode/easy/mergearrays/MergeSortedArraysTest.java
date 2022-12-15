@@ -15,6 +15,9 @@ class MergeSortedArraysTest {
 
     static Stream<Arguments> paramProvider() {
         return Stream.of(
+                Arguments.of(new int[]{3,4,0,0},2, new int[]{5,6}, 2, new int[]{3,4,5,6}),
+                Arguments.of(new int[]{5,6,0,0},2, new int[]{3,4}, 2, new int[]{3,4,5,6}),
+                Arguments.of(new int[]{0},0, new int[]{1}, 1, new int[]{1}),
                 Arguments.of(new int[]{1,2,3,0},3, new int[]{6}, 1, new int[]{1,2,3,6}),
                 Arguments.of(new int[]{1,2,3,0,0,0},3, new int[]{2,5,6}, 3, new int[]{1,2,2,3,5,6})
         );
@@ -31,7 +34,7 @@ Output: [1,2,2,3,5,6]
     @MethodSource("paramProvider")
     public void testMerging(int[] inputNum1, int m, int[] inputNum2, int n, int[] expectedResult)
     {
-        mergeSortedArrays.merge(inputNum1, m, inputNum2, n);
+        mergeSortedArrays.merge2(inputNum1, m, inputNum2, n);
 
         assertArrayEquals(expectedResult, inputNum1);
     }
