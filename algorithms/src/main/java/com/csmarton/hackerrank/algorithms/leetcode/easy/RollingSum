@@ -1,0 +1,32 @@
+/*
+Given an array nums. We define a running sum of an array as runningSum[i] = sum(nums[0]…nums[i]).
+
+Return the running sum of nums.
+
+ */
+ 
+ 
+import java.util.Arrays;
+
+public class Main {
+    
+    public static void main (String[] args) {
+        /* code */
+        Main rollingSum = new Main();
+        
+        System.out.println(Arrays.toString(rollingSum.solve(new int[]{1,2,3,4,5})));
+    }
+
+    public int[] solve(int[] numbers) {
+        
+        if(numbers.length == 1)
+         return numbers;
+         
+        for (int i = 1; i< numbers.length; i++) {
+            numbers[i] = numbers[i-1] + numbers[i];
+        }
+        
+         return numbers;
+    }
+    
+}
