@@ -1,5 +1,7 @@
-package com.csmarton.hackerrank.algorithms.leetcode.addtwonumbers;
+package com.csmarton.hackerrank.algorithms.leetcode.easy.addtwonumbers;
 
+import com.csmarton.hackerrank.algorithms.leetcode.addtwonumbers.AddTwoNumbers;
+import com.csmarton.hackerrank.algorithms.leetcode.addtwonumbers.ListNode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
