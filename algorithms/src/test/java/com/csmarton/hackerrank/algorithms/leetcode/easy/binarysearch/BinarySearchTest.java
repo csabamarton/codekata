@@ -25,7 +25,7 @@ class BinarySearchTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     void testBinarySearch(int[] input, int target, int expectedIndex) {
-        int result = binarySearch.search(input, target);
+        int result = binarySearch.search2(input, target);
 
         assertEquals(expectedIndex, result);
     }
