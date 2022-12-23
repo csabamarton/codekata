@@ -30,48 +30,26 @@ public class NumberOfIslands {
         for (int vertical = 0; vertical < grid.length; vertical++) {
             char[] row = grid[vertical];
             for (int horizontal = 0; horizontal < row.length; horizontal++) {
-                if(row[horizontal] == 0)
-                    continue;
-
-                if(cluster.containsKey(vertical + horizontal + ""))
-
-
-                if(isIsland(grid, vertical, horizontal))
-                    numOfIslands++;
+              if(grid[vertical][horizontal] == '1'){
+                  numOfIslands++;
+                  walk(grid, vertical, horizontal);
+              }
             }
         }
 
         return numOfIslands;
     }
 
-    private boolean isNextToAnIsland(char[][] grid, int vertical, int horizontal, Map<String, Integer> cluster) {
-        if(grid[vertical][horizontal] == 0)
-            return false;
+    private void walk(char[][] grid, int vertical, int horizontal) {
+        if (vertical < 0 || horizontal < 0 || vertical >= grid.length ||
+                horizontal >= grid[0].length || grid[vertical][horizontal] == '0')
+            return;
 
-        int clusterKey = 0;
-
-        if(vertical > 0 && cluster.containsKey((vertical - 1) + "" +  horizontal) ||
-                vertical < grid.length -1 && cluster.containsKey((vertical + 1) + "" +  horizontal) ||
-                horizontal > 0 && cluster.containsKey((vertical) + "" +  (horizontal - 1)) ||
-                horizontal < grid[vertical].length - 1 && cluster.containsKey((vertical) + "" +  (horizontal + 1)))
-            cluster.put(vertical + "" + horizontal, 1)
-            if(vertical == grid.length - 1 || grid[vertical + 1][horizontal] == 0)
-                if(horizontal == 0 || grid[vertical][horizontal - 1] == 0)
-                    if (horizontal == grid[vertical].length - 1 || grid[vertical][horizontal + 1] == 0)
-                        return true;
-        return false;
-    }
-
-
-    private boolean isIsland(char[][] grid, int vertical, int horizontal) {
-        if(grid[vertical][horizontal] == 0)
-            return false;
-        if(vertical == 0 || grid[vertical - 1][horizontal] == 0)
-            if(vertical == grid.length - 1 || grid[vertical + 1][horizontal] == 0)
-                if(horizontal == 0 || grid[vertical][horizontal - 1] == 0)
-                    if (horizontal == grid[vertical].length - 1 || grid[vertical][horizontal + 1] == 0)
-                        return true;
-        return false;
+        grid[vertical][horizontal] = '0';
+        walk(grid, vertical - 1, horizontal);
+        walk(grid, vertical + 1, horizontal);
+        walk(grid, vertical, horizontal + 1);
+        walk(grid, vertical, horizontal - 1);
     }
 
 }
