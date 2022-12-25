@@ -4,8 +4,6 @@ import java.util.Map;
 
 public class ShortestDistance {
     public int closetTarget(String[] words, String target, int startIndex) {
-        boolean found = false;
-
         if(words[startIndex].equals(target))
             return 0;
 
