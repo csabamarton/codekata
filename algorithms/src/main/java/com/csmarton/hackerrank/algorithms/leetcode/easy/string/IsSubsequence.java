@@ -5,20 +5,38 @@ import java.util.stream.Collectors;
 
 public class IsSubsequence {
 
+    public boolean isSubsequence4(String s, String t) {
+       return next(s, t, 0, 0);
+    }
+
+    private boolean next(String s, String t, int sIndex, int tIndex) {
+        if(sIndex == s.length())
+            return true;
+
+        if(tIndex == t.length())
+            return false;
+
+        int firstOccurence = t.indexOf(s.charAt(sIndex), tIndex);
+
+        if(firstOccurence == -1)
+            return false;
+
+        return next(s, t, sIndex + 1, firstOccurence + 1);
+    }
+
+
     public boolean isSubsequence(String s, String t) {
-        String temp = t;
-        int sIndex = 0;
+       int sIndex = 0, tIndex = 0;
 
         while (sIndex < s.length()) {
-            int firstOccurence = temp.indexOf(s.charAt(sIndex));
-            if (firstOccurence == -1)
+            int first = t.indexOf(s.charAt(sIndex), tIndex);
+            if (first == -1)
                 return false;
 
-            if(firstOccurence == temp.length() - 1 && sIndex < s.length() - 1)
+            if(first == t.length() - 1 && sIndex < s.length() - 1)
                 return false;
-            temp = temp.substring(firstOccurence + 1);
+            tIndex = first + 1;
             sIndex++;
-
         }
 
         return sIndex == s.length();
