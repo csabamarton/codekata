@@ -40,7 +40,7 @@ class MergeSortedListsTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     void testMergingTwoSortedLists(ListNode list1, ListNode list2, ListNode expectedResult) {
-        ListNode result = mergeSortedLists.mergeTwoLists(list1, list2);
+        ListNode result = mergeSortedLists.mergeTwoLists2(list1, list2);
 
         assertEquals(expectedResult, result);
     }
