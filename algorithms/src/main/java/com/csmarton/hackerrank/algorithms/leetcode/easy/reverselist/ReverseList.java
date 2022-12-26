@@ -7,6 +7,21 @@ import java.util.Stack;
 public class ReverseList {
 
     public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while (curr != null) {
+            ListNode temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+
+            curr = temp;
+        }
+
+        return prev;
+    }
+
+    public ListNode reverseList2(ListNode head) {
         Stack<ListNode> stack = new Stack<>();
 
         ListNode current = head;
