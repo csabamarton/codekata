@@ -40,7 +40,6 @@ Constraints:
 At most 3 * 104 calls will be made to update and sumRange.
  */
 public class NumArray {
-
     private final int[] nums;
     private final int[] sums;
     private final int sumLength;
@@ -53,37 +52,37 @@ public class NumArray {
         double sumLength = Math.floor(s);
         this.sumLength = (int) sumLength;
 
-        sums = new int[(int)Math.ceil(len / sumLength)];
+        sums = new int[(int) Math.ceil(len / sumLength)];
 
         int tempSum = 0;
         int sumsIndex = 0;
         for (int i = 0; i < len; i++) {
             tempSum = tempSum + nums[i];
-            if((i + 1) % sumLength == 0) {
+            if ((i + 1) % sumLength == 0) {
                 sums[sumsIndex++] = tempSum;
                 tempSum = 0;
             }
         }
 
-        if(tempSum > 0)
+        if (tempSum > 0)
             sums[sumsIndex] = tempSum;
 
         this.nums = nums;
     }
 
     public void update(int index, int val) {
-       int diff = val - nums[index];
-       nums[index] = val;
+        int diff = val - nums[index];
+        nums[index] = val;
 
-        int sumIndex = (int)Math.floor(index / sumLength);
+        int sumIndex = (int) Math.floor(index / sumLength);
 
         sums[sumIndex] += diff;
         System.out.println();
     }
 
     public int sumRange(int left, int right) {
-        int leftSumIndex = (int)Math.floor(left / sumLength);
-        int rightSumIndex = (int)Math.floor(right / sumLength);
+        int leftSumIndex = (int) Math.floor(left / sumLength);
+        int rightSumIndex = (int) Math.floor(right / sumLength);
 
         int totalSum = 0;
         if (leftSumIndex == rightSumIndex) {
