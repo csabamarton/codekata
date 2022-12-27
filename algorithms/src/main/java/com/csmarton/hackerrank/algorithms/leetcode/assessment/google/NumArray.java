@@ -1,8 +1,5 @@
 package com.csmarton.hackerrank.algorithms.leetcode.assessment.google;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /*
 Given an integer array nums, handle multiple queries of the following types:
 
