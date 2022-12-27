@@ -42,39 +42,92 @@ At most 3 * 104 calls will be made to update and sumRange.
 public class NumArray {
 
     private final int[] nums;
+    private final int[] sums;
+    private final int sumLength;
 
     public NumArray(int[] nums) {
-        int m = nums.length;
-        this.nums = new int[m];
 
-        this.nums[0] = nums[0];
+        int len = nums.length;
+        double s = Math.sqrt(len);
 
-        for (int i = 1; i < m; i++) {
-            this.nums[i] = this.nums[i-1] + nums[i];
+        double sumLength = Math.floor(s);
+        this.sumLength = (int) sumLength;
+
+        sums = new int[(int)Math.ceil(len / sumLength)];
+
+        int tempSum = 0;
+        int sumsIndex = 0;
+        for (int i = 0; i < len; i++) {
+            tempSum = tempSum + nums[i];
+            if((i + 1) % sumLength == 0) {
+                sums[sumsIndex++] = tempSum;
+                tempSum = 0;
+            }
         }
+
+        if(tempSum > 0)
+            sums[sumsIndex] = tempSum;
+
+        this.nums = nums;
     }
 
     public void update(int index, int val) {
-        int oldValue = index == 0 ? nums[0] : nums[index] - nums[index - 1];
+       int diff = val - nums[index];
+       nums[index] = val;
 
-        if(oldValue == val)
-            return;
+        int sumIndex = (int)Math.floor(index / sumLength);
 
-        int diff = val - oldValue;
-
-        for (int i = index; i < nums.length ; i++) {
-            nums[i] = nums[i] +  diff;
-        }
+        sums[sumIndex] += diff;
+        System.out.println();
     }
 
     public int sumRange(int left, int right) {
-        int sum = 0;
-        for (int i = left; i <= right; i++) {
-            sum = sum + nums[i];
+        int leftSumIndex = (int)Math.floor(left / sumLength);
+        int rightSumIndex = (int)Math.floor(right / sumLength);
+
+        int totalSum = 0;
+        if (leftSumIndex == rightSumIndex) {
+            for (int i = left; i <= right; i++) {
+                totalSum += nums[i];
+            }
+
+            return totalSum;
         }
 
-        if (left == 0) return nums[right];
-        return nums[right] - nums[left-1];
+        if (rightSumIndex - leftSumIndex > 1) {
+            for (int i = leftSumIndex + 1; i < rightSumIndex; i++) {
+                totalSum += sums[i];
+            }
+        }
+
+        //left
+        int numOfIteration = sumLength - left % sumLength;
+        for (int i = left; i < left + numOfIteration; i++) {
+            totalSum += nums[i];
+        }
+
+        //right
+        numOfIteration = right % sumLength;
+        for (int i = right - numOfIteration; i <= right; i++) {
+            totalSum += nums[i];
+        }
+
+        return totalSum;
+    }
+
+    public static void main(String[] args) {
+        NumArray numArray = new NumArray(new int[]{1, 3, 5});
+        System.out.println(numArray.sumRange(0, 2)); // return 1 + 3 + 5 = 9
+        numArray.update(1, 2);   // nums = [1, 2, 5]
+        System.out.println(numArray.sumRange(0, 2)); // return 1 + 2 + 5 = 8
+
+        numArray = new NumArray(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+        //System.out.println(numArray.sumRange(0,2));
+
+        numArray.sumRange(2, 6);
+        numArray.update(4, 8);
+        numArray.update(0, 3);
+        numArray.update(9, 13);
     }
 
 }
