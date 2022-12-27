@@ -15,6 +15,18 @@ Output: [3,4,5]
 Explanation: The middle node of the list is node 3.
  */
 public class MiddleNode {
+
+    public ListNode middleNodeWithMindblowingAlgo(ListNode head) {
+        ListNode slow = head, fast = head;
+
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
     public ListNode middleNode(ListNode head) {
         ListNode tempNode = head;
         int numOfNodes = 1;
