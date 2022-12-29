@@ -23,17 +23,31 @@ public class FindLoop {
     }
 
     public ListNode detectCycle2(ListNode head) {
-        ListNode current = head;
-        StringBuilder sb = new StringBuilder();
-        sb.append(current.hashCode());
-        while (current.next != null) {
-            current = current.next;
-            if (sb.indexOf(String.valueOf(current.next.hashCode())) != -1)
-                return current.next;
-            sb.append(current.hashCode());
+        if(head == null || head.next == null || head.next.next == null)
+            return null;
+
+        ListNode tortoise = head;
+        ListNode hare = head;
+
+        tortoise = tortoise.next;
+        hare = hare.next.next;
+
+        while(hare != tortoise) {
+            if(hare.next == null || hare.next.next == null)
+                return null;
+
+            tortoise = tortoise.next;
+            hare = hare.next.next;
         }
 
-        return null;
+        hare = head;
+
+        while (hare != tortoise) {
+            tortoise = tortoise.next;
+            hare = hare.next;
+        }
+
+        return tortoise;
     }
 
 
