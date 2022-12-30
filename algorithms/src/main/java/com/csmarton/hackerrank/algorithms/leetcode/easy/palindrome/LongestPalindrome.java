@@ -45,7 +45,6 @@ public class LongestPalindrome {
                 if (value % 2 != 0)
                     hasOdd = true;
             longestPalindrome += value / 2;
-            List.of()
         }
 
         return hasOdd ? (longestPalindrome * 2 + 1) : longestPalindrome * 2;
