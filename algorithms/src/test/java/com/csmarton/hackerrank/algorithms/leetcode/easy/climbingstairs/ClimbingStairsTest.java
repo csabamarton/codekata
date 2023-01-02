@@ -25,7 +25,7 @@ class ClimbingStairsTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     void test(int numOfStairs, int expectedNumOfWays) {
-        int result = climbingStairs.climbingStairs(numOfStairs);
+        int result = climbingStairs.climbStairs2(numOfStairs);
 
         assertEquals(expectedNumOfWays, result);
     }
