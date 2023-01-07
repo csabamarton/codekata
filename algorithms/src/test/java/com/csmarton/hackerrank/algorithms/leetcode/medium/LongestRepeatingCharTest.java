@@ -15,7 +15,8 @@ class LongestRepeatingCharTest {
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
-                Arguments.of("ABAB", 2, 4)
+                Arguments.of("ABAB", 2, 4),
+                Arguments.of("AABABBA", 1, 4)
         );
     }
 
@@ -23,7 +24,7 @@ class LongestRepeatingCharTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     void testFindingLongestRepeatingCharacter(String input, int k, int expectedResult) {
-        int result = longestRepeatingChar.characterReplacement(input, k);
+        int result = longestRepeatingChar.characterReplacementWithArray(input, k);
 
         assertEquals(expectedResult, result);
     }
