@@ -1,3 +1,3 @@
 # codekata
 
-Practise makes perfect! Day by day Algorithms, Data Structures, Design Patterns excersices
+Practise makes perfect! Day by day Algorithms, Data Structures, Design Patterns excercises
