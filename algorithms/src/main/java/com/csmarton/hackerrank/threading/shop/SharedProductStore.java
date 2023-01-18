@@ -35,6 +35,7 @@ public class SharedProductStore {
             }
         }
         inventory.put(Item.OUT_OF_STOCK, inventory.get(Item.OUT_OF_STOCK) + 1);
+
         return "Ooops! Product run out of stock. Sorry";
     }
 
