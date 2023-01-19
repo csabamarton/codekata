@@ -13,8 +13,42 @@ public class MergeSort {
     public static void main(String[] args) {
         MergeSort mergeSort = new MergeSort();
 
-        mergeSort.start();
+        mergeSort.start2();
     }
+
+    private void start2() {
+        int[] number =  divAndConq(array);
+
+    }
+
+    private int[] divAndConq(int[] nums) {
+        if (nums.length == 1)
+            return nums;
+
+        int half = nums.length / 2;
+
+        int[] left = divAndConq(Arrays.copyOfRange(nums, 0, half));
+        int[] right = divAndConq(Arrays.copyOfRange(nums, half, nums.length));
+
+        int[] sorted = new int[nums.length];
+
+        int index1 = 0, index2 = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if(index2 == right.length || index1 != left.length && left[index1] < right[index2]) {
+                sorted[i] = left[index1++];
+            } else
+                sorted[i] = right[index2++];
+        }
+
+        return sorted;
+    }
+
+
+
+
+
+
 
     private void start() {
        int[] number =  divideAndConquere(array);
