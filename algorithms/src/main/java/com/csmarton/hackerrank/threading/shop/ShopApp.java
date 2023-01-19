@@ -30,7 +30,5 @@ public class ShopApp {
         inventoryForNonMultiThread.buyProduct(Item.PEN);
 
         System.out.println(sharedProductStore.compareInventories(inventoryForNonMultiThread));
-
-
     }
 }
