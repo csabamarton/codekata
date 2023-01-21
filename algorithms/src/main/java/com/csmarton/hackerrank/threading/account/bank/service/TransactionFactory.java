@@ -34,7 +34,7 @@ public class TransactionFactory {
             fromAccount = values.get(generator.nextInt(values.size()));
         }
 
-        double amount = new Random().nextDouble() * 50;
+        double amount = new Random().nextDouble() * 50 + 150;
         return new Transaction(fromAccount, toAccount, new BigDecimal(amount).setScale(0, RoundingMode.DOWN));
     }
 }

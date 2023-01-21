@@ -20,7 +20,7 @@ public class AccountFactory {
 
         for (int i = 0; i < numOfAccount; i++) {
             String userName = "Account" + (i + 1);
-            BigDecimal balance = new BigDecimal(random.nextDouble() * 100);
+            BigDecimal balance = new BigDecimal(random.nextDouble() * 100 + 100);
             balance = balance.setScale(0, RoundingMode.DOWN);
             Account account = new Account(userName, balance);
             accounts.put(userName, account);
