@@ -41,10 +41,23 @@ public class LongestRepeatingChar {
 
         for (int end = 0; end < s.length(); end += 1) {
             char c = s.charAt(end);
+
+            //Simple
             if (frequencyMap.containsKey(c)) {
                 frequencyMap.put(c, frequencyMap.get(c) + 1);
             } else
                 frequencyMap.put(c, 1);
+
+            // Option No.2
+            frequencyMap.compute(c, (key, val)
+                    -> (val == null) ?
+                    1 : val + 1);
+
+            // Option No.3
+            if (frequencyMap.computeIfPresent(c, (key, v) -> v + 1) == null) {
+                frequencyMap.put(c, 1);
+            }
+
 
             maxFrequency = frequencyMap.entrySet().stream().max((Comparator.comparing(Map.Entry::getValue))).get().getValue();
 

@@ -24,7 +24,7 @@ class LongestRepeatingCharTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     void testFindingLongestRepeatingCharacter(String input, int k, int expectedResult) {
-        int result = longestRepeatingChar.characterReplacementWithArray(input, k);
+        int result = longestRepeatingChar.characterReplacementWithHashmap(input, k);
 
         assertEquals(expectedResult, result);
     }
