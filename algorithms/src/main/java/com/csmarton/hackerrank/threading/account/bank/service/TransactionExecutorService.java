@@ -15,7 +15,6 @@ public class TransactionExecutorService {
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
     public void initiateTransfers(List<Transaction> transactions) throws ExecutionException, InterruptedException {
-
         List<Future<String>> results = new ArrayList<>();
 
         for (int i = 0; i < transactions.size(); i++) {
