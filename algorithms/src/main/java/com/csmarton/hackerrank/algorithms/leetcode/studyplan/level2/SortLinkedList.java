@@ -5,6 +5,59 @@ import com.csmarton.hackerrank.algorithms.leetcode.addtwonumbers.ListNode;
 public class SortLinkedList {
 
     public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+        ListNode mid = findMid(head);
+        ListNode left = sortList(head);
+        ListNode right = sortList(mid);
+
+        return merge(left, right);
+    }
+
+    private ListNode findMid(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        if (slow.next == null)
+            return slow;
+
+        fast = slow.next;
+        slow.next = null;
+
+        return fast;
+    }
+
+    private ListNode merge(ListNode left, ListNode right) {
+        ListNode sortedList = new ListNode();
+        ListNode head = sortedList;
+
+        while (left != null && right != null) {
+            if(left.val < right.val) {
+                sortedList.next = left;
+                left = left.next;
+            } else {
+                sortedList.next = right;
+                right = right.next;
+            }
+
+            sortedList = sortedList.next;
+        }
+
+        if(left != null)
+            sortedList.next = left;
+        else
+            sortedList.next = right;
+
+        return head.next;
+    }
+
+
+    public ListNode sortList2(ListNode head) {
 
         ListNode searchNode = head;
 
