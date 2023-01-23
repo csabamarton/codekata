@@ -15,7 +15,6 @@ public class MainBank {
         TransactionExecutorService transactionService = new TransactionExecutorService();
 
         int numOfAccounts = 2;
-        int numofTransactions = 10;
 
         accountService.setAccounts(numOfAccounts);
 
@@ -25,14 +24,7 @@ public class MainBank {
 
         System.out.println(transactions);
         transactionService.initiateTransfers(transactions);
-/*
-        for (int i = 0; i < numofTransactions; i++) {
-            //transactionService.transfer(transactions.get(i));
-            transactionService.initiateTransfer(transactions.get(i));
-        }
-*/
 
         System.out.println("Sum of Balances after transactions: " + accountService.getSumOfBalances());
-
     }
 }

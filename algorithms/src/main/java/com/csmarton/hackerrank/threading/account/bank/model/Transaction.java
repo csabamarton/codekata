@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 public class Transaction {
-    Account senderAccount;
-    Account recieverAccount;
-    BigDecimal amount;
+    private final Account senderAccount;
+    private final Account recieverAccount;
+    private final BigDecimal amount;
 
 }
