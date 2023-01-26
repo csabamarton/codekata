@@ -1,46 +1,59 @@
 package com.csmarton.hackerrank.algorithms.leetcode.studyplan.level2;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class LongestPalindrome {
 
     public int longestPalindrome(String[] words) {
-        List<String> wordList = Arrays.asList(words);
+        Map<String, Integer> frequency = new HashMap<>();
 
-        int max = 0;
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (frequency.containsKey(word)) {
+                frequency.put(word, frequency.get(word) + 1);
+            } else
+                frequency.put(word, 1);
+        }
 
-        boolean hasTwin = false;
+        int numOfLetters = 0;
 
-        Iterator<String> iterator = wordList.iterator();
+        boolean hadOddTwins = false;
 
-        while (iterator.hasNext()) {
-            String current = iterator.next();
-            if(current == null) continue;
+        for (String key : frequency.keySet()) {
+            if(frequency.get(key) < 1) continue;
 
-            String reverse = new String("" + current.charAt(1) + current.charAt(0));
+            String reverse = "" + key.charAt(1) + key.charAt(0);
 
-            while ()
-            for (int j = i + 1; j < words.length; j++) {
-                if(words[j] == null)
+            if (key.equals(reverse)) {
+                if (frequency.get(key) % 2 == 0) {
+                    numOfLetters += 2 * frequency.get(key);
+                    frequency.put(key, 0);
                     continue;
-                if (words[j].equals(reverse)) {
-                    max += 4;
-                    words[j] = null;
-
-                    current = "";
-                    break;
                 }
+
+                if(!hadOddTwins) {
+                    hadOddTwins = true;
+                    numOfLetters += 2 * frequency.get(key);
+                } else {
+                    numOfLetters += 2 * frequency.get(key) - 2;
+                }
+                continue;
             }
 
-            if(!hasTwin && current.equals(reverse)) {
-                max += 2;
-                hasTwin = true;
+            Integer revFreq = frequency.get(reverse);
+            Integer freq = frequency.get(key);
+
+            if (frequency.containsKey(reverse) && revFreq > 0) {
+
+                int min = Math.min(revFreq, freq);
+                frequency.put(reverse, revFreq - min);
+                frequency.put(key, freq - min);
+
+                numOfLetters += min * 4;
             }
         }
 
-        return max;
+        return numOfLetters;
     }
 
 

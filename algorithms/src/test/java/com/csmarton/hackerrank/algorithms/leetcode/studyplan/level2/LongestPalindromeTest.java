@@ -15,6 +15,8 @@ class LongestPalindromeTest {
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(
+                Arguments.of(new String[]{"cc","ll","xx"}, 2),
+                Arguments.of(new String[]{"ab","ty","yt","lc","cl","ab"}, 8),
                 Arguments.of(new String[]{"bb", "bb"}, 4)
         );
     }
