@@ -7,13 +7,17 @@ import java.util.concurrent.Callable;
 
 public class TransactionCallable implements Callable {
 
-    public TransactionCallable(Transaction transaction) {
+    AccountService accountService;
+    public TransactionCallable(Transaction transaction, AccountService accountService) {
         this.transaction = transaction;
+        this.accountService = accountService;
     }
 
     private final Transaction transaction;
     @Override
     public Transaction call() throws Exception {
+        Transaction transactionResult = accountService.transferMoney(transaction);
+
         boolean withdrawResult = transaction.getSender().withdraw(transaction.getAmount());
         if (!withdrawResult) {
             transaction.setStatus(TransactionStatus.FAILED_NO_CREDIT);

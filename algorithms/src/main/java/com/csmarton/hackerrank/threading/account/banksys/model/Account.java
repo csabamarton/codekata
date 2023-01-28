@@ -26,8 +26,8 @@ public class Account {
 
             System.out.println(String.format("Has enough credit on the this user's (%s) account for making this transaction: %.0f, Balance: %.0f", name, amount, balance));
 
+            balance -= amount;
 
-                balance -= amount;
             return true;
         } finally {
             lock.writeLock().unlock();
@@ -52,5 +52,9 @@ public class Account {
         } finally {
             lock.readLock().unlock();
         }
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
