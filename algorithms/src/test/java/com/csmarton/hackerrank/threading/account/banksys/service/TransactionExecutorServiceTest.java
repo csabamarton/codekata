@@ -17,11 +17,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TransactionExecutorServiceTest {
 
     private TransactionExecutorService transactionExecutorService;
-    private ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private ExecutorService executorService;
+
+    private AccountService accountService;
 
     @BeforeEach
     void setUp() {
-        transactionExecutorService = new TransactionExecutorService(executorService);
+        accountService = new AccountService();
+        executorService = Executors.newFixedThreadPool(10);
+        transactionExecutorService = new TransactionExecutorService(executorService, accountService);
     }
 
     @AfterEach

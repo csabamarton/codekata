@@ -17,25 +17,7 @@ public class TransactionExecutorService {
     private final AccountService accountService;
 
     public Future<Transaction> initiateTransfer(Transaction transaction) {
-        Callable callable = new Callable() {
-            @Override
-            public Transaction call() throws Exception {
-                Account sender = transaction.getSender();
-                Account reciever = transaction.getReciever();
-
-                boolean withdrawResult = sender.withdraw(transaction.getAmount();
-
-                if (!withdrawResult) {
-                    transaction.setStatus(TransactionStatus.FAILED_NO_CREDIT);
-                    return transaction;
-                }
-                boolean depositResult = reciever.deposit(transaction.getAmount());
-
-                transaction.setStatus(TransactionStatus.SUCCESS);
-                accountService.saveTransaction(transaction);
-
-            }
-        }
+        TransactionCallable callable = new TransactionCallable(transaction, accountService);
 
         Future<Transaction> future = executorService.submit(callable);
 

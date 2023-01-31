@@ -4,6 +4,6 @@ import java.math.BigDecimal;
 
 public class AcountDTO {
 
-    private final String userName;
+    private String userName;
     private BigDecimal balance;
 }

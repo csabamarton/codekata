@@ -16,8 +16,6 @@ public class TransactionCallable implements Callable {
     private final Transaction transaction;
     @Override
     public Transaction call() throws Exception {
-        Transaction transactionResult = accountService.transferMoney(transaction);
-
         boolean withdrawResult = transaction.getSender().withdraw(transaction.getAmount());
         if (!withdrawResult) {
             transaction.setStatus(TransactionStatus.FAILED_NO_CREDIT);

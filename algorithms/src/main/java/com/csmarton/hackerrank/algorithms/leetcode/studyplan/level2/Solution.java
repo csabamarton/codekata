@@ -7,28 +7,34 @@ import java.util.Stack;
 
 public class Solution {
 
-    boolean isValid(String s) {
-        Map<Character, Character> bracets = Map.of('(', ')', '{', '}', '[', ']');
-        Stack<Character> stack = new Stack<>();
+    char isValid(String s, String t) {
 
-        Collection<Character> values = bracets.values();
+        int[] sArr = new int[26];
+        int[] tArr = new int[26];
 
         for (int i = 0; i < s.length(); i++) {
-
             char c = s.charAt(i);
 
-            if(bracets.containsKey(c)) {
-                stack.push(bracets.get(c));
-            } else {
-                Character pop = stack.pop();
-                if(pop == null)
-                    return false;
-                if(pop != c) {
-                    return false;
-                }
-            }
+            sArr[c - 'a']++;
         }
 
-        return stack.empty();
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+
+            tArr[c - 'a']++;
+        }
+
+        for (int i = 0; i < sArr.length; i++) {
+            if(sArr[i] != tArr[i])
+                return (char)(i + 'a');
+        }
+
+        return 'a';
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        char valid = solution.isValid("abcd", "ceadb");
+        System.out.println(valid);
     }
 }
