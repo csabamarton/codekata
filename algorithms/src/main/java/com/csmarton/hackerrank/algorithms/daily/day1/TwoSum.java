@@ -1,12 +1,9 @@
- package com.csmarton.hackerrank.algorithms.basic.arrays;
+ package com.csmarton.hackerrank.algorithms.daily.day1;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-/**
+ /**
  * Given an array of integers nums and an integer target, return indices of the two numbers such that
  * they add up to target.
  *

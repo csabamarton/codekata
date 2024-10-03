@@ -1,4 +1,4 @@
-package com.csmarton.hackerrank.algorithms.basic.arrays;
+package com.csmarton.hackerrank.algorithms.daily.day1;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
