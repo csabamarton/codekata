@@ -1,38 +1,32 @@
 package com.csmarton.hackerrank.algorithms.daily.day5;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LongestSubstringWithoutRepeatingCharacters {
     public int lengthOfLongestSubstring(String s) {
-        if (s.isEmpty()) return 0;
-        if (s.length() == 1) return 1;
+        if (s.length() < 2)
+            return s.length();
 
-        HashMap<Character, Integer> pos = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>();
+        map.put(s.charAt(0), 0);
 
         int start = 0;
         int max = 1;
+
         for (int i = 1; i < s.length(); i++) {
             char c = s.charAt(i);
-            Integer last = pos.get(c);
+            Integer pos = map.get(c);
 
-            if (last != null) {
-                if(last < start) {
-                    pos.put(c, i);
-
-                    if (max < i - start);
-                        max = i - start;
-                }
+            if (pos != null && pos >= start) {
+                start = pos + 1;
             }
-            if (pos.containsKey(c)) {
-                if(pos.get(c) > start)
-                    start =
-                start = pos.get(c) + 1;
-            } else {
-                pos.put(c, i);
-            }
-
-
+            int length = i - start + 1;
+            if (max < length)
+                max = length;
+            map.put(c, i);
         }
+
         return max;
     }
 }
